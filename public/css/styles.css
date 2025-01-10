@@ -29,8 +29,9 @@ header h1 {
 }
 
 nav ul {
+    background-color: black;
+    color: white;
     display: flex;
-    gap: 200px;
     text-align: center;
     justify-content: center;
 }
@@ -151,6 +152,12 @@ footer {
 
 /* Larger Screens */
 @media screen and (min-width: 768px) {
+  header {
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   nav ul {
     background-color: black;
     padding: 20px;
@@ -158,6 +165,8 @@ footer {
     padding-right: 100px;
     justify-self: center;
     align-self: center;
+    gap: 200px;
+    display: flex;
   }
   nav ul li {
       display: inline-block;
@@ -238,89 +247,97 @@ footer {
 /* Mobile View */
 @media screen and (max-width: 767px) {
     body {
-      font-size: 14px; /* Adjust font size for readability */
-      padding: 10px; /* Add padding for mobile devices */
+      font-size: 14px;
+      padding: 10px;
     }
   
     header {
-      flex-direction: column; /* Stack header elements vertically */
-      text-align: center;
+      text-align: left;
+      display: flex;
     }
   
     nav ul {
-      flex-direction: column; /* Stack navigation links vertically */
-      gap: 10px; /* Reduce spacing between links */
-      padding: 10px; /* Add padding around links */
+      gap: 10px;
+      padding: 10px;
+      display: flex;
+      text-decoration: none;
+      gap: 20px;
     }
   
     nav ul li {
-      font-size: 16px; /* Adjust font size for smaller screens */
-      color: black; /* Ensure good contrast */
+      font-size: 16px;
+      color: black;
+      color: white;
+      display: inline-block;
     }
   
     .container {
-      padding: 10px; /* Reduce padding for smaller screens */
+      padding: 10px;
     }
   
     .car-section {
-      width: 100%; /* Full-width for mobile */
-      float: none; /* Disable float for proper stacking */
-      margin: 10px auto; /* Center the section */
-      padding: 15px; /* Add padding for spacing */
+      width: 100%;
+      float: none;
+      margin: 10px auto;
+      padding: 15px;
     }
   
     .upgrades {
-      width: 100%; /* Full-width on mobile */
-      grid-template-columns: 1fr; /* Single column layout */
-      gap: 10px; /* Reduce gap between items */
-      margin: 0 auto; /* Center upgrades section */
+      width: 100%;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 0 auto;
     }
   
     .reviews {
-      width: 100%; /* Full-width on mobile */
-      padding: 10px; /* Add padding for spacing */
-      background-color: #f9f9f9; /* Ensure readability */
-      border-radius: 5px; /* Add subtle corners */
+      width: 100%;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
     }
   
     .features {
-      flex-direction: column; /* Stack upgrades and reviews vertically */
-      gap: 20px; /* Add space between the two sections */
+      flex-direction: column;
+      gap: 20px;
     }
   
     footer {
-      text-align: center; /* Center-align text */
-      padding: 10px; /* Add spacing */
+      text-align: left;
+      padding: 10px;
     }
   
     /* Adjust images */
     .container img,
     #upgrades img {
-      max-width: 80%; /* Scale images down */
+      max-width: 80%;
       height: auto;
-      margin: 0 auto; /* Center-align images */
+      margin: 0 auto;
     }
   
     #upgrades {
-      padding: 10px; /* Adjust padding for smaller screens */
-      text-align: center; /* Center-align text */
+      padding: 10px;
+      text-align: center;
     }
   
     #upgrades img {
-      max-width: 70px; /* Smaller image size */
+      max-width: 70px;
     }
   
     #top-header {
-      flex-direction: column; /* Stack site name and tools */
-      gap: 10px; /* Add spacing */
+      flex-direction: column;
+      gap: 10px;
     }
   
     .siteName a {
-      font-size: 24px; /* Adjust font size for mobile */
+      font-size: 24px;
+      color: #333;
+      text-decoration: none;
     }
   
     #tools a {
-      font-size: 14px; /* Smaller font size for tools */
+      font-size: 14px;
+      color: #007bff;
+      text-decoration: none;
     }
 }
   
