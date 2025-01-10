@@ -23,6 +23,7 @@ app.set("layout", "./layouts/layout") // not at views root
  *************************/
 app.use(static)
 
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file

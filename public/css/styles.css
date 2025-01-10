@@ -3,99 +3,168 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  background-image: url('public/images/site/checkerboard.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
-/* Base Styles (Mobile First) */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    border: 10px solid skyblue;
+    
 }
 
-header, nav, footer {
-  text-align: center;
-  background-color: #004080;
-  color: #fff;
-  padding: 1em 0;
+header {
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-header #logo h1, header #account a {
-  display: inline-block;
-  margin: 0 1em;
-}
-
-header #account a {
-  color: #fff;
-  text-decoration: none;
+header h1 {
+    margin: 0;
 }
 
 nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  color: #fff;
+    display: flex;
+    gap: 200px;
+    text-align: center;
+    justify-content: center;
 }
 
-nav ul li {
-  display: inline;
-  margin: 0 10px;
+.container {
+    text-align: center;
+    padding: 20px;
+    background: white;
 }
 
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
+.container img {
+    max-width: 100%;
+    height: auto;
 }
 
-main {
-  padding: 1em;
+.container h2 {
+    font-size: 24px;
 }
 
-main .hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+.car-section {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    float: left;
 }
 
-main .hero img {
-  max-width: 100%;
-  height: auto;
+.car-section p {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-main .hero .hero-text button {
-  background-color: #004080;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 10px;
+.car-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 20px;
 }
 
-.features, .reviews {
-  margin-top: 2em;
+.car-section ul li {
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
-.features .upgrades, .reviews ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 10px;
+.car-section .btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-.features .upgrade, .reviews li {
-  flex: 1 1 45%;
-  text-align: center;
+.car-section .btn:hover {
+    background-color: #0056b3;
+}
+
+.upgrades {
+    text-align: center;
+    display: grid;
+    width: 50%;
+    height: auto;
+}
+
+.upgrades h3 {
+    font-size: 24px;
+    color: #333;
+    text-align: left;
+}
+
+#upgrades {
+    padding: 10px;
+    padding-left: 100px;
+    padding-right: 100px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+}
+
+#upgrades img {
+    max-width: 100px;
+    height: auto;
+    align-items: center;
+    justify-items: center;
+}
+
+#upgrades p {
+    margin: 0;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+}
+
+.reviews {
+    width: 45%;
+    vertical-align: top;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.reviews div {
+    margin-bottom: 20px;
+}
+
+footer {
+    text-align: left;
+    padding: 10px;
+    background: white;
+    margin-top: 20px;
 }
 
 /* Larger Screens */
 @media screen and (min-width: 768px) {
-  header, nav, footer {
-      text-align: left;
-      padding: 1em 2em;
+  nav ul {
+    background-color: black;
+    padding: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+    justify-self: center;
+    align-self: center;
   }
-
   nav ul li {
       display: inline-block;
+      color: white;
+      gap: 50px;
+      text-align: center;
+      font-size: 17px;
   }
 
   main .hero {
@@ -103,16 +172,155 @@ main .hero .hero-text button {
       justify-content: space-between;
   }
 
+  main h2 {
+    text-align: left;
+  }
+
   main .hero .hero-text {
       margin-left: 20px;
       text-align: left;
   }
 
-  .features .upgrades, .reviews ul {
-      justify-content: flex-start;
+  /* Parent container for .upgrades and .reviews */
+  .features {
+    display: flex;
+    justify-content: space-between; /* Ensures space between the two sections */
+    align-items: flex-start; /* Aligns the items at the top */
+    gap: 20px; /* Adds space between the two sections */
+    margin: 20px; /* Optional: Adds spacing around the container */
   }
 
-  .features .upgrade, .reviews li {
-      flex: 1 1 22%;
+  /* Upgrades Section */
+  .upgrades {
+    flex: 1; /* Allows this section to take up 50% of the space */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns for upgrades */
+    gap: 20px; /* Space between items */
+    background-color: #f9f9f9;
   }
+
+  /* Reviews Section */
+  .reviews {
+    flex: 2; /* Allows this section to take up 50% of the space */
+    text-align: left;
+    padding: 20px; /* Adds spacing inside the reviews section */
+    background-color: #f9f9f9; /* Optional: Light background for contrast */
+    border-radius: 8px; /* Optional: Rounded corners */
+  }
+
+  #top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    gap: 800px;
+  }
+
+  .siteName a {
+    text-decoration: none;
+    font-size: 50px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  #tools a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #007bff;
+  }
+
+  #tools a:hover {
+    text-decoration: underline;
+  }
+
 }
+
+/* Mobile View */
+@media screen and (max-width: 767px) {
+    body {
+      font-size: 14px; /* Adjust font size for readability */
+      padding: 10px; /* Add padding for mobile devices */
+    }
+  
+    header {
+      flex-direction: column; /* Stack header elements vertically */
+      text-align: center;
+    }
+  
+    nav ul {
+      flex-direction: column; /* Stack navigation links vertically */
+      gap: 10px; /* Reduce spacing between links */
+      padding: 10px; /* Add padding around links */
+    }
+  
+    nav ul li {
+      font-size: 16px; /* Adjust font size for smaller screens */
+      color: black; /* Ensure good contrast */
+    }
+  
+    .container {
+      padding: 10px; /* Reduce padding for smaller screens */
+    }
+  
+    .car-section {
+      width: 100%; /* Full-width for mobile */
+      float: none; /* Disable float for proper stacking */
+      margin: 10px auto; /* Center the section */
+      padding: 15px; /* Add padding for spacing */
+    }
+  
+    .upgrades {
+      width: 100%; /* Full-width on mobile */
+      grid-template-columns: 1fr; /* Single column layout */
+      gap: 10px; /* Reduce gap between items */
+      margin: 0 auto; /* Center upgrades section */
+    }
+  
+    .reviews {
+      width: 100%; /* Full-width on mobile */
+      padding: 10px; /* Add padding for spacing */
+      background-color: #f9f9f9; /* Ensure readability */
+      border-radius: 5px; /* Add subtle corners */
+    }
+  
+    .features {
+      flex-direction: column; /* Stack upgrades and reviews vertically */
+      gap: 20px; /* Add space between the two sections */
+    }
+  
+    footer {
+      text-align: center; /* Center-align text */
+      padding: 10px; /* Add spacing */
+    }
+  
+    /* Adjust images */
+    .container img,
+    #upgrades img {
+      max-width: 80%; /* Scale images down */
+      height: auto;
+      margin: 0 auto; /* Center-align images */
+    }
+  
+    #upgrades {
+      padding: 10px; /* Adjust padding for smaller screens */
+      text-align: center; /* Center-align text */
+    }
+  
+    #upgrades img {
+      max-width: 70px; /* Smaller image size */
+    }
+  
+    #top-header {
+      flex-direction: column; /* Stack site name and tools */
+      gap: 10px; /* Add spacing */
+    }
+  
+    .siteName a {
+      font-size: 24px; /* Adjust font size for mobile */
+    }
+  
+    #tools a {
+      font-size: 14px; /* Smaller font size for tools */
+    }
+}
+  
