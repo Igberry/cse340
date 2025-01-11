@@ -3,10 +3,6 @@
 *:before,
 *:after {
   box-sizing: border-box;
-  background-image: url('public/images/site/checkerboard.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
 }
 body {
     font-family: Arial, sans-serif;
@@ -14,7 +10,16 @@ body {
     padding: 0;
     color: #333;
     border: 10px solid skyblue;
+    max-width: 100%;
     
+}
+#wrapper {
+  max-width: 1200px;
+  padding: 20px;
+  background: url('/public/images/site/checkerboard.jpg') repeat; /* Image for the border */
+  border: 10px solid transparent; /* Transparent inner border */
+  text-align: center;
+  font-size: 18px;
 }
 
 header {
@@ -22,10 +27,12 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
 }
 
 header h1 {
     margin: 0;
+    font-size: 20px;
 }
 
 nav ul {
@@ -34,6 +41,7 @@ nav ul {
     display: flex;
     text-align: center;
     justify-content: center;
+    width: 1200px;
 }
 
 .container {
@@ -106,10 +114,8 @@ nav ul {
     text-align: left;
 }
 
-#upgrades {
+#upgrades1 {
     padding: 10px;
-    padding-left: 100px;
-    padding-right: 100px;
     background-color: #007bff;
     color: white;
     border-radius: 8px;
@@ -118,15 +124,44 @@ nav ul {
     align-content: center;
 }
 
-#upgrades img {
+#upgrades2 {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+}
+
+#upgrades3 {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+}
+
+#upgrades4 {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.upgrades img {
     max-width: 100px;
     height: auto;
     align-items: center;
     justify-items: center;
 }
 
-#upgrades p {
-    margin: 0;
+.upgrades p {
     font-size: 16px;
     color: white;
     text-align: center;
@@ -154,9 +189,11 @@ footer {
 @media screen and (min-width: 768px) {
   header {
     background: #ffffff;
-    display: flex;
+    display: grid;
     justify-content: space-between;
     align-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
   }
   nav ul {
     background-color: black;
@@ -166,7 +203,8 @@ footer {
     justify-self: center;
     align-self: center;
     gap: 200px;
-    display: flex;
+    grid-column: 1;
+    grid-row: 2;
   }
   nav ul li {
       display: inline-block;
@@ -198,26 +236,66 @@ footer {
     gap: 20px; /* Adds space between the two sections */
     margin: 20px; /* Optional: Adds spacing around the container */
   }
-
   /* Upgrades Section */
   .upgrades {
-    flex: 1; /* Allows this section to take up 50% of the space */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns for upgrades */
+    display: block;
     gap: 20px; /* Space between items */
     background-color: #f9f9f9;
   }
 
+  #upgrades1 {
+    display: inline-block;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    margin: 0 auto;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  #upgrades2 {
+    display: inline-block;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    margin: 0 auto;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  #upgrades3 {
+    display: inline-block;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    margin: 0 auto;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  #upgrades4 {
+    display: inline-block;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    margin: 0 auto;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .upgrades img {
+    max-width: 50px;
+    height: auto;
+  }
+
   /* Reviews Section */
   .reviews {
-    flex: 2; /* Allows this section to take up 50% of the space */
     text-align: left;
-    padding: 20px; /* Adds spacing inside the reviews section */
     background-color: #f9f9f9; /* Optional: Light background for contrast */
     border-radius: 8px; /* Optional: Rounded corners */
   }
 
-  #top-header {
+  #top {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -308,22 +386,18 @@ footer {
   
     /* Adjust images */
     .container img,
-    #upgrades img {
+    .upgrades img {
       max-width: 80%;
       height: auto;
       margin: 0 auto;
     }
   
-    #upgrades {
+    .upgrades {
       padding: 10px;
       text-align: center;
     }
   
-    #upgrades img {
-      max-width: 70px;
-    }
-  
-    #top-header {
+    #top {
       flex-direction: column;
       gap: 10px;
     }
