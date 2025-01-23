@@ -10,6 +10,7 @@ const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
+const baseController = require("./controllers/baseController")
 
 /* ***********************
  * View Engine and Templates
@@ -22,6 +23,15 @@ app.set("layout", "./layouts/layout") // not at views root
  * Routes
  *************************/
 app.use(static)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).render('errors/500', { title: 'Server Error' });
+});
+
+app.use((req, res) => {
+  res.status(404).render('errors/404', { title: 'Page Not Found' });
+});
+
 
 
 /* ***********************
@@ -39,4 +49,4 @@ app.listen(port, () => {
 })
 
 // Index route
-app.get("/", function(req, res) {res.render("index", {title: "Home"})})
+app.get("/", baseController.buildHome)
