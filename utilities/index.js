@@ -1,40 +1,68 @@
-const invModel = require("../models/inventory-model")
-const Util = {}
+const invModel = require("../models/inventory-model");
+const Util = {};
 
 /* ************************
- * Constructs the nav HTML unordered list
+ * Constructs the navigation menu as an HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
-}
+Util.getNav = async function () {
+  try {
+    let data = await invModel.getClassifications();
+    let list = `
+      <ul>
+        <li><a href="/" title="Home page">Home</a></li>
+        ${data.rows
+          .map(
+            (row) => `
+          <li>
+            <a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">
+              ${row.classification_name}
+            </a>
+          </li>
+        `
+          )
+          .join("")}
+      </ul>
+    `;
+    return list;
+  } catch (error) {
+    console.error("Error fetching classifications:", error);
+    return "<ul><li>Error loading navigation</li></ul>";
+  }
+};
 
-module.exports = Util
+/* ************************
+ * Builds the vehicle details HTML
+ ************************** */
+Util.buildVehicleDetailsHTML = (vehicle) => {
+  // Ensure vehicle properties exist to avoid errors
+  const make = vehicle.make ? Util.escapeHTML(vehicle.make) : "Unknown Make";
+  const model = vehicle.model ? Util.escapeHTML(vehicle.model) : "Unknown Model";
+  const year = vehicle.year || "N/A";
+  const price = vehicle.price ? `$${vehicle.price.toLocaleString()}` : "N/A";
+  const mileage = vehicle.mileage ? `${vehicle.mileage.toLocaleString()} miles` : "N/A";
+  const description = vehicle.description ? Util.escapeHTML(vehicle.description) : "No description available.";
+  const image = vehicle.image_full || "/images/no-image.png"; // Default image if missing
 
-exports.buildVehicleDetailsHTML = (vehicle) => {
   return `
     <div class="vehicle-details">
-      <h1>${vehicle.make} ${vehicle.model}</h1>
-      <img src="${vehicle.image_full}" alt="${vehicle.make} ${vehicle.model}" />
-      <p><strong>Year:</strong> ${vehicle.year}</p>
-      <p><strong>Price:</strong> $${vehicle.price.toLocaleString()}</p>
-      <p><strong>Mileage:</strong> ${vehicle.mileage.toLocaleString()} miles</p>
-      <p><strong>Description:</strong> ${vehicle.description}</p>
+      <h1>${make} ${model}</h1>
+      <img src="${image}" alt="${make} ${model}" />
+      <p><strong>Year:</strong> ${year}</p>
+      <p><strong>Price:</strong> ${price}</p>
+      <p><strong>Mileage:</strong> ${mileage}</p>
+      <p><strong>Description:</strong> ${description}</p>
     </div>
   `;
 };
+
+/* ************************
+ * Escapes HTML to prevent XSS attacks
+ ************************** */
+Util.escapeHTML = (str) => {
+  return str.replace(/[&<>"']/g, (match) => {
+    const escapeMap = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
+    return escapeMap[match];
+  });
+};
+
+module.exports = Util;
