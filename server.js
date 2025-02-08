@@ -7,9 +7,10 @@
  * Require Statements
  *************************/
 const express = require("express");
+const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
-const app = express();
+const cookieParser = require("cookie-parser");
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 
@@ -18,24 +19,50 @@ const baseController = require("./controllers/baseController");
  *************************/
 app.set("view engine", "ejs");
 app.use(expressLayouts);
-app.set("layout", "./layouts/layout"); // not at views root
+app.set("layout", "./layouts/layout"); // Not at views root
+
+/* ***********************
+ * Middleware
+ *************************/
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 /* ***********************
  * Static File Serving
  *************************/
-// Ensure static files are served from the 'public' directory or another folder
-app.use(express.static("public")); // Adjust the folder path if necessary
+app.use(express.static("public")); // Ensure static files are served from 'public'
 
 /* ***********************
  * Routes
  *************************/
 const inventoryRoutes = require("./routes/inventory");
-app.use("/inv", inventoryRoutes);  // Ensure you have the correct routes defined for inventory
+app.use("/inv", inventoryRoutes); // Ensure you have the correct routes defined for inventory
 
 // Index route
-app.get("/", baseController.buildHome);  // Make sure buildHome is defined in the controller
+app.get("/", baseController.buildHome); // Make sure buildHome is defined in the controller
 
-// Error Handling Middleware
+// JSON object to be added to cookie
+let users = { 
+  name: "Ritik", 
+  Age: "18"
+};
+
+// Route for adding cookie
+app.get('/setuser', (req, res) => { 
+  res.cookie("userData", users); 
+  res.send('User data added to cookie'); 
+});
+
+// Iterate users data from cookie
+app.get('/getuser', (req, res) => { 
+  res.send(req.cookies); // Shows all cookies 
+});
+
+/* ***********************
+ * Error Handling Middleware
+ *************************/
+// 500 Internal Server Error
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).render('errors/500', { title: 'Server Error' });
