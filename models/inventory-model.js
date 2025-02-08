@@ -51,6 +51,21 @@ async function buildClassificationList() {
     return classificationList;
 }
 
+async function getAccountById(account_id) {
+    const result = await db.query('SELECT * FROM accounts WHERE account_id = ?', [account_id]);
+    return result[0];
+}
+
+async function updateAccount(account_id, data) {
+    const { firstname, lastname, email } = data;
+    await db.query('UPDATE accounts SET firstname = ?, lastname = ?, email = ? WHERE account_id = ?', 
+                   [firstname, lastname, email, account_id]);
+}
+
+async function updatePassword(account_id, hashedPassword) {
+    await db.query('UPDATE accounts SET password = ? WHERE account_id = ?', [hashedPassword, account_id]);
+}
+
 /* Export all functions properly */
 module.exports = {
     getClassifications,
@@ -58,4 +73,7 @@ module.exports = {
     insertClassification,
     insertInventory,
     buildClassificationList,
+    getAccountById, 
+    updateAccount, 
+    updatePassword
 };
