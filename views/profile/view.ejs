@@ -1,0 +1,5 @@
+<h1>User Profile</h1>
+<p><strong>Bio:</strong> <%= profile.bio %></p>
+<img src="<%= profile.profile_picture %>" alt="Profile Picture">
+<p><strong>Social Links:</strong> <%= JSON.stringify(profile.social_links) %></p>
+<a href="/profile/edit">Edit Profile</a>

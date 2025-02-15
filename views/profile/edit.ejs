@@ -1,0 +1,10 @@
+<h1>Edit Profile</h1>
+<form action="/profile/edit" method="POST">
+    <label>Bio:</label>
+    <textarea name="bio"><%= profile.bio %></textarea>
+    <label>Profile Picture URL:</label>
+    <input type="text" name="profile_picture" value="<%= profile.profile_picture %>">
+    <label>Social Links (JSON format):</label>
+    <input type="text" name="social_links" value='<%= JSON.stringify(profile.social_links) %>'>
+    <button type="submit">Update Profile</button>
+</form>
