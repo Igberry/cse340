@@ -1,44 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <%- include('./partials/head') %>
+    <%= include('./partials/head') %>
 </head>
 <body>
   <header>
-    <%- include('./partials/header') %>
+    <%= include('./partials/header') %>
     <nav>
-        <%- include('./partials/navigations') %>
+        <%= include('./partials/navigations') %>
     </nav>
   </header>
   <main>
     <div class="container">
         <h2>Welcome to CSE Motors!</h2>
-        <img src="/images/vehicles/delorean.jpg" alt="DMC Delorean">
+        <img src="/images/vehicles/delorean.jpg" alt="Silver DMC Delorean sports car">
         <div class="car-section">
             <p>DMC Delorean</p>
             <ul>
                 <li>3 Cup holders</li>
-                <li>Superman doors</li>
-                <li>Fuzzy dice!</li>
+                <li>Superman-style doors</li>
+                <li>Fuzzy dice for a fun touch!</li>
             </ul>
             <a href="#" class="btn">Own Today</a>
         </div>
+
         <div class="upgrades">
             <h3>Delorean Upgrades</h3>
             <div id="upgrades1">
-                <img src="/images/upgrades/flux-cap.png" alt="Flux Capacitor">
+                <img src="/images/upgrades/flux-cap.png" alt="Iconic Flux Capacitor upgrade">
                 <p>Flux Capacitor</p>
             </div>
             <div id="upgrades2">
-                <img src="/images/upgrades/flame.jpg" alt="Flame Decals">
+                <img src="/images/upgrades/flame.jpg" alt="Flame Decals for sporty look">
                 <p>Flame Decals</p>
             </div>
             <div id="upgrades3">
-                <img src="/images/upgrades/bumper_sticker.jpg" alt="Bumper Stickers">
+                <img src="/images/upgrades/bumper_sticker.jpg" alt="Stylish Bumper Stickers">
                 <p>Bumper Stickers</p>
             </div>
             <div id="upgrades4">
-                <img src="/images/upgrades/hub-cap.jpg" alt="Hub Caps">
+                <img src="/images/upgrades/hub-cap.jpg" alt="Shiny Hub Caps">
                 <p>Hub Caps</p>
             </div>
         </div>
@@ -64,7 +65,7 @@
     </div>
   </main>
   <footer>
-    <%- include('./partials/footer') %>
+    <%= include('./partials/footer') %>
   </footer>
 
 </body>
