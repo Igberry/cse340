@@ -1,34 +1,53 @@
-<h1>Update Account</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Account</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <%- include('../partials/header') %>
+    </header>
+    <main>
+        <h1>Update Account</h1>
 
-<!-- Display Errors -->
-<% if (errors.length > 0) { %>
-    <ul>
-        <% errors.forEach(error => { %>
-            <li><%= error.msg %></li>
-        <% }); %>
-    </ul>
-<% } %>
+        <!-- Display Errors -->
+        <% if (errors.length > 0) { %>
+            <ul class="error-messages">
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+        <% } %>
 
-<!-- Account Update Form -->
-<form action="/account/update" method="post">
-    <label>First Name:</label>
-    <input type="text" name="firstname" value="<%= user.firstname %>" required>
-    
-    <label>Last Name:</label>
-    <input type="text" name="lastname" value="<%= user.lastname %>" required>
+        <!-- Account Update Form -->
+        <form action="/account/update" method="post">
+            <label>First Name:</label>
+            <input type="text" name="firstname" value="<%= user.firstname %>" required>
 
-    <label>Email:</label>
-    <input type="email" name="email" value="<%= user.email %>" required>
+            <label>Last Name:</label>
+            <input type="text" name="lastname" value="<%= user.lastname %>" required>
 
-    <input type="hidden" name="account_id" value="<%= user.account_id %>">
-    <button type="submit">Update Account</button>
-</form>
+            <label>Email:</label>
+            <input type="email" name="email" value="<%= user.email %>" required>
 
-<!-- Password Change Form -->
-<form action="/account/change-password" method="post">
-    <label>New Password:</label>
-    <input type="password" name="password" required>
+            <input type="hidden" name="account_id" value="<%= user.account_id %>">
+            <button type="submit">Update Account</button>
+        </form>
 
-    <input type="hidden" name="account_id" value="<%= user.account_id %>">
-    <button type="submit">Change Password</button>
-</form>
+        <!-- Password Change Form -->
+        <form action="/account/change-password" method="post">
+            <label>New Password:</label>
+            <input type="password" name="password" required>
+
+            <input type="hidden" name="account_id" value="<%= user.account_id %>">
+            <button type="submit">Change Password</button>
+        </form>
+    </main>
+    <footer>
+        <%- include('../partials/footer') %>
+    </footer>
+</body>
+</html>
