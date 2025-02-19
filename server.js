@@ -49,7 +49,7 @@ let users = {
 };
 
 // Route for adding cookie
-app.get('/setuser', (req, res) => { 
+app.get('/setuser', (req, res) => {
   res.cookie("userData", users); 
   res.send('User data added to cookie'); 
 });
