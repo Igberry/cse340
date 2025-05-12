@@ -5,6 +5,12 @@ body {
   color: #333;
 }
 
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 header,
 nav,
 main,
@@ -54,20 +60,50 @@ nav ul li a {
   border-radius: 5px;
 }
 
-.upgrades .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+.upgrades {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  gap: 30px;
 }
 
-.upgrades div {
-  text-align: center;
+.upgrades h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+
+.upgrades>div {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.upgrades>div:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .upgrades img {
-  width: 100%;
-  max-width: 100px;
+  width: 80px;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 8px;
 }
+
+.upgrades p {
+  font-size: 1.1rem;
+  color: #222;
+  font-weight: 500;
+  margin: 0;
+}
+
 
 /* Media Queries */
 @media (min-width: 768px) {
