@@ -8,7 +8,6 @@ const { injectNavList } = require("./utilities/middleware");
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
 // Serve static files from /public
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/inv', require('./routes/inventoryRoute'));
