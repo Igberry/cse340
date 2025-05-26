@@ -1,68 +1,36 @@
-const invModel = require("../models/inventory-model");
-const Util = {};
+const pool = require("../database");
 
-/* ************************
- * Constructs the navigation menu as an HTML unordered list
- ************************** */
-Util.getNav = async function () {
+async function getNavList() {
   try {
-    let data = await invModel.getClassifications();
-    let list = `
-      <ul>
-        <li><a href="/" title="Home page">Home</a></li>
-        ${data.rows
-          .map(
-            (row) => `
-          <li>
-            <a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">
-              ${row.classification_name}
-            </a>
-          </li>
-        `
-          )
-          .join("")}
-      </ul>
-    `;
-    return list;
+    const result = await pool.query("SELECT * FROM classification ORDER BY classification_name");
+    return result.rows;
   } catch (error) {
-    console.error("Error fetching classifications:", error);
-    return "<ul><li>Error loading navigation</li></ul>";
+    console.error("Error building nav list:", error);
+    throw error;
   }
-};
+}
 
-/* ************************
- * Builds the vehicle details HTML
- ************************** */
-Util.buildVehicleDetailsHTML = (vehicle) => {
-  // Ensure vehicle properties exist to avoid errors
-  const make = vehicle.make ? Util.escapeHTML(vehicle.make) : "Unknown Make";
-  const model = vehicle.model ? Util.escapeHTML(vehicle.model) : "Unknown Model";
-  const year = vehicle.year || "N/A";
-  const price = vehicle.price ? `$${vehicle.price.toLocaleString()}` : "N/A";
-  const mileage = vehicle.mileage ? `${vehicle.mileage.toLocaleString()} miles` : "N/A";
-  const description = vehicle.description ? Util.escapeHTML(vehicle.description) : "No description available.";
-  const image = vehicle.image_full || "/images/no-image.png"; // Default image if missing
+function buildVehicleDetailHTML(vehicle) {
+  const price = vehicle.inv_price.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+  const mileage = vehicle.inv_miles.toLocaleString();
 
   return `
-    <div class="vehicle-details">
-      <h1>${make} ${model}</h1>
-      <img src="${image}" alt="${make} ${model}" />
-      <p><strong>Year:</strong> ${year}</p>
-      <p><strong>Price:</strong> ${price}</p>
-      <p><strong>Mileage:</strong> ${mileage}</p>
-      <p><strong>Description:</strong> ${description}</p>
+    <div class="vehicle-detail">
+      <img src="${vehicle.inv_image_full}" alt="${vehicle.inv_make} ${vehicle.inv_model}" class="vehicle-image" />
+      <div class="vehicle-info">
+        <h2>${vehicle.inv_make} ${vehicle.inv_model} (${vehicle.inv_year})</h2>
+        <p><strong>Price:</strong> ${price}</p>
+        <p><strong>Mileage:</strong> ${mileage} miles</p>
+        <p>${vehicle.inv_description}</p>
+      </div>
     </div>
   `;
-};
+}
 
-/* ************************
- * Escapes HTML to prevent XSS attacks
- ************************** */
-Util.escapeHTML = (str) => {
-  return str.replace(/[&<>"']/g, (match) => {
-    const escapeMap = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
-    return escapeMap[match];
-  });
+module.exports = {
+  buildVehicleDetailHTML,
+  getNavList,
 };
-
-module.exports = Util;

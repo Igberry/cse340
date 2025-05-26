@@ -1,0 +1,12 @@
+<h1>
+    <%= title %>
+</h1>
+<ul>
+    <% vehicles.forEach(vehicle=> { %>
+        <li>
+            <%= vehicle.inv_make %>
+                <%= vehicle.inv_model %> —
+                    <a href="/inv/detail/<%= vehicle.inv_id %>">View Details</a>
+        </li>
+        <% }) %>
+</ul>
