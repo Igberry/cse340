@@ -286,7 +286,7 @@ form textarea:focus {
 
 /* Submit buttons */
 form button[type="submit"] {
-  background-color: #007bff;
+  background-color: black;
   color: white;
   border: none;
   padding: 0.75rem 1.8rem;
@@ -301,7 +301,7 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: black;
 }
 
 /* Media Queries */
