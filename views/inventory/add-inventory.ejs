@@ -1,23 +1,49 @@
 <%- include('../partials/header.ejs') %>
 
-<h1>Add New Inventory Item</h1>
+  <h1>Add Inventory</h1>
+  <% if (errors.length> 0) { %>
+    <ul>
+      <% errors.forEach(err=> { %>
+        <li>
+          <%= err.msg %>
+        </li>
+        <% }) %>
+    </ul>
+    <% } %>
 
-<!-- Flash Messages -->
-<% if (messages) { %>
-  <p class="flash-message"><%= messages %></p>
-<% } %>
+      <form action="/inv/add-inventory" method="post">
+        <label for="classification_id">Classification</label>
+        <%- classificationList %> <!-- injects HTML -->
 
-<form action="/inv/add-inventory" method="POST">
-  <label for="classificationList">Classification:</label>
-  <%= classificationList %> <!-- Dynamic dropdown -->
+          <label for="inv_make">Make</label>
+          <input name="inv_make" type="text" required value="<%= inv_make %>">
 
-  <label for="inv_make">Make:</label>
-  <input type="text" name="inv_make" value="<%= inv_make || '' %>" required>
+          <label for="inv_model">Model</label>
+          <input name="inv_model" type="text" required value="<%= inv_model %>">
 
-  <label for="inv_model">Model:</label>
-  <input type="text" name="inv_model" value="<%= inv_model || '' %>" required>
+          <label for="inv_description">Description</label>
+          <textarea name="inv_description" required><%= inv_description %></textarea>
 
-  <button type="submit">Add Item</button>
-</form>
+          <label for="inv_price">Price</label>
+          <input name="inv_price" type="number" required value="<%= inv_price %>">
 
-<%- include('../partials/footer.ejs') %>
+          <label for="inv_miles">Miles</label>
+          <input name="inv_miles" type="number" value="<%= inv_miles %>">
+
+          <label for="inv_year">Year</label>
+          <input name="inv_year" type="text" value="<%= inv_year %>">
+
+          <label for="inv_image">Image</label>
+          <input name="inv_image" type="text" value="/images/vehicles/no-image.png">
+
+          <label for="inv_thumbnail">Thumbnail</label>
+          <input name="inv_thumbnail" type="text" value="/images/vehicles/no-image-tn.png">
+
+          <label for="inv_color">Color</label>
+          <input name="inv_color" type="text" value="<%= inv_color %>">
+
+          <button type="submit">Add Vehicle</button>
+      </form>
+
+
+      <%- include('../partials/footer.ejs') %>

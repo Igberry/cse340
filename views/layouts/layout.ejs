@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-</head>
+
+<%- include("partials/head") %>
+
 <body>
-    <div id="wrapper">
-        <% include('../partials/header') %>
+    <%- include("partials/header") %>
+        <%- include("partials/navigation") %>
 
-        <% include('../partials/navigations') %> <!-- This line should be included as it is -->
+            <main>
+                <%- body %>
+            </main>
 
-        <main>
-            <%- body %>
-        </main>
-    </div>
+            <%- include("partials/footer") %>
 </body>
+
 </html>

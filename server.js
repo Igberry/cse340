@@ -4,10 +4,12 @@ const app = express();
 const path = require('path');
 const utils = require("./utilities");
 const { injectNavList } = require("./utilities/middleware");
+const baseRoute = require("./routes/baseRoute");
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.set('layout', 'layouts/layout'); // points to views/layouts/layout.ejs
 // Serve static files from /public
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/inv', require('./routes/inventoryRoute'));
@@ -15,6 +17,8 @@ app.use((req, res, next) => {
   console.log(`Request URL: ${req.url}`);
   next();
 });
+
+app.use("/", baseRoute);
 app.use(injectNavList);
 // After your route declarations
 app.use(async (req, res, next) => {
@@ -23,6 +27,7 @@ app.use(async (req, res, next) => {
     title: "404 - Page Not Found",
     message: "Sorry, the page you’re looking for doesn’t exist.",
     nav,
+    layout: false
   });
 });
 
@@ -47,11 +52,6 @@ app._router.stack.forEach(middleware => {
       }
     });
   }
-});
-
-// Route to render homepage
-app.get('/', (req, res) => {
-  res.render('index');
 });
 
 // Start the server
