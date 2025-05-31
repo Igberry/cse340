@@ -1,18 +1,19 @@
 <%- include('../partials/head.ejs') %>
 
-    <h1>Vehicle Management</h1>
+  <h1>Vehicle Management</h1>
 
-    <!-- Flash Messages -->
-    <% if (messages && messages.length> 0) { %>
-      <p class="flash-message">
-        <%= messages[0] %>
-      </p>
-      <% } %>
+  <!-- Flash Messages -->
+  <% if (messages && messages.length> 0) { %>
+    <p class="flash-message">
+      <%= messages[0] %>
+    </p>
+    <% } %>
 
-
+      <nav>
         <ul>
           <li><a href="/inv/add-classification">Add New Classification</a></li>
           <li><a href="/inv/add-inventory">Add New Inventory</a></li>
         </ul>
+      </nav>
 
-        <%- include('../partials/footer.ejs') %>
+      <%- include('../partials/footer.ejs') %>

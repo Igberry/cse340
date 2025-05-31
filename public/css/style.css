@@ -28,13 +28,13 @@ nav ul {
   display: flex;
   justify-content: space-around;
   list-style: none;
-  padding: 0;
+  padding: 30px;
   background: #222;
 }
 
 nav ul li a {
   color: white;
-  padding: 0.75rem 1rem;
+  padding: 1rem 1rem;
   text-decoration: none;
 }
 
