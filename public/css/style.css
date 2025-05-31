@@ -154,6 +154,156 @@ nav ul li a {
   margin-bottom: 0.5rem;
 }
 
+h1 {
+  text-align: center;
+  color: #222;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Flash message */
+.flash-message {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+  padding: 1rem 1.2rem;
+  border-radius: 6px;
+  margin: 1rem auto 2rem auto;
+  max-width: 600px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Vehicle list grid container */
+.vehicle-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 960px;
+  margin: 0 auto 3rem auto;
+  padding: 0 1rem;
+}
+
+/* Individual vehicle card */
+.vehicle-card {
+  background-color: #f9fafb;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 280px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.vehicle-card:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Vehicle image */
+.vehicle-image {
+  max-width: 100%;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+/* Vehicle card headings */
+.vehicle-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Vehicle card paragraphs */
+.vehicle-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* Vehicle detail link */
+.vehicle-card a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.vehicle-card a:hover {
+  text-decoration: underline;
+}
+
+/* Form styling */
+form {
+  max-width: 600px;
+  margin: 0 auto 3rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Form labels */
+form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Form inputs and textarea */
+form input[type="text"],
+form input[type="number"],
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  margin-bottom: 1.25rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+}
+
+form textarea {
+  min-height: 100px;
+}
+
+/* Focus styles */
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus,
+form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Submit buttons */
+form button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.8rem;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+  min-width: 150px;
+  font-weight: 600;
+}
+
+form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
 /* Media Queries */
 @media (min-width: 768px) {
   .hero {
@@ -187,5 +337,18 @@ nav ul li a {
 
   .hero img {
     max-width: 50%;
+  }
+
+  .vehicle-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vehicle-card {
+    width: 90%;
+  }
+
+  form {
+    padding: 1.2rem;
   }
 }

@@ -1,5 +1,4 @@
-<%- include('../partials/header.ejs') %>
-
+<%- include('../partials/head.ejs') %>
   <h1>Add New Classification</h1>
 
   <!-- Flash Messages -->
@@ -8,11 +7,6 @@
       <%= messages[0] %>
     </p>
     <% } %>
-
-
-      <h1>
-        <%= title %>
-      </h1>
 
       <div class="vehicle-list">
         <% vehicles.forEach(vehicle=> { %>
