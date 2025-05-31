@@ -227,7 +227,7 @@ h1 {
 /* Vehicle detail link */
 .vehicle-card a {
   text-decoration: none;
-  color: #007bff;
+  color: black;
   font-weight: 600;
 }
 
