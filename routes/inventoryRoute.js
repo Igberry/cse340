@@ -18,7 +18,7 @@ router.get('/type/:classification', async (req, res, next) => {
         const vehicles = await inventoryModel.getVehiclesByClassification(classification);
 
         if (!vehicles || vehicles.length === 0) {
-            return res.status(404).render('errors/404', { title: 'No vehicles found' });
+            return res.status(404).render('errors/error', { title: 'No vehicles found' });
         }
 
         res.render('inventory/add-classification', {
@@ -42,10 +42,10 @@ router.post(
 );
 
 router.post(
-  "/add-inventory",
-  inventoryValidationRules,
-  checkInventoryData,
-  invController.addInventory
+    "/add-inventory",
+    inventoryValidationRules,
+    checkInventoryData,
+    invController.addInventory
 );
 
 module.exports = router;

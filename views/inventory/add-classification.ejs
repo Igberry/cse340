@@ -3,11 +3,12 @@
   <h1>Add New Classification</h1>
 
   <!-- Flash Messages -->
-  <% if (messages) { %>
+  <% if (typeof messages !=='undefined' && messages.length> 0) { %>
     <p class="flash-message">
-      <%= messages %>
+      <%= messages[0] %>
     </p>
     <% } %>
+
 
       <h1>
         <%= title %>

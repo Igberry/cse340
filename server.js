@@ -1,4 +1,5 @@
-// app.js
+const session = require("express-session");
+const flash = require("connect-flash");
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -10,6 +11,22 @@ const baseRoute = require("./routes/baseRoute");
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('layout', 'layouts/layout'); // points to views/layouts/layout.ejs
+// Setup sessions
+app.use(session({
+  secret: "superSecret", // use a secure key in production
+  resave: false,
+  saveUninitialized: true,
+}));
+
+// Setup flash
+app.use(flash());
+
+// Pass flash messages to all views
+app.use((req, res, next) => {
+  res.locals.message = req.flash("message");
+  next();
+});
+
 // Serve static files from /public
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/inv', require('./routes/inventoryRoute'));

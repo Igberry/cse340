@@ -3,13 +3,25 @@ const utils = require('../utilities');
 
 // Define all controller functions first
 const buildAddClassification = async (req, res, next) => {
-  const nav = await utils.getNavList();
-  res.render("inventory/add-classification", {
-    title: "Add Classification",
-    nav,
-    errors: [],
-  });
+  try {
+    const nav = await utils.getNavList();
+    const messages = req.flash("message");
+
+    // Fetch vehicles (you must implement this or get from your model)
+    const vehicles = await inventoryModel.getAllVehicles(); // example function, adapt if needed
+
+    res.render("inventory/add-classification", {
+      title: "Add Classification",
+      nav,
+      messages,
+      vehicles,   // pass vehicles here
+    });
+  } catch (error) {
+    next(error);
+  }
 };
+
+
 
 const addClassification = async (req, res, next) => {
   const { classification_name } = req.body;
@@ -35,7 +47,7 @@ const buildManagement = async (req, res, next) => {
     res.render("inventory/management", {
       title: "Inventory Management",
       nav,
-      message: req.flash("message")
+      messages: req.flash("message")
     });
   } catch (err) {
     next(err);

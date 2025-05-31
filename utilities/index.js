@@ -1,4 +1,20 @@
 const pool = require("../database");
+const inventoryModel = require('../models/inventory-model');
+
+async function buildClassificationList() {
+  try {
+    const classifications = await inventoryModel.getClassifications();
+    let list = '<select name="classification_id" id="classification_id">';
+    list += '<option value="">Choose a classification</option>';
+    classifications.forEach(c => {
+      list += `<option value="${c.classification_id}">${c.classification_name}</option>`;
+    });
+    list += '</select>';
+    return list;
+  } catch (error) {
+    throw error;
+  }
+}
 
 async function getNavList() {
   try {
@@ -33,4 +49,5 @@ function buildVehicleDetailHTML(vehicle) {
 module.exports = {
   buildVehicleDetailHTML,
   getNavList,
+  buildClassificationList
 };
