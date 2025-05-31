@@ -3,7 +3,7 @@ const utils = require('../utilities');
 
 // Define all controller functions first
 const buildAddClassification = async (req, res, next) => {
-  const nav = await utils.getNav();
+  const nav = await utils.getNavList();
   res.render("inventory/add-classification", {
     title: "Add Classification",
     nav,
@@ -13,7 +13,7 @@ const buildAddClassification = async (req, res, next) => {
 
 const addClassification = async (req, res, next) => {
   const { classification_name } = req.body;
-  const nav = await utils.getNav();
+  const nav = await utils.getNavList();
 
   try {
     const result = await inventoryModel.addClassification(classification_name);
@@ -31,7 +31,7 @@ const addClassification = async (req, res, next) => {
 
 const buildManagement = async (req, res, next) => {
   try {
-    const nav = await utils.getNav();
+    const nav = await utils.getNavList();
     res.render("inventory/management", {
       title: "Inventory Management",
       nav,
@@ -43,7 +43,7 @@ const buildManagement = async (req, res, next) => {
 };
 
 const buildAddInventory = async (req, res, next) => {
-  const nav = await utils.getNav();
+  const nav = await utils.getNavList();
   const classificationList = await utils.buildClassificationList();
   res.render("inventory/add-inventory", {
     title: "Add Vehicle",
@@ -73,7 +73,7 @@ const addInventory = async (req, res, next) => {
       throw new Error("Insert failed.");
     }
   } catch (err) {
-    const nav = await utils.getNav();
+    const nav = await utils.getNavList();
     const classificationList = await utils.buildClassificationList(classification_id);
     res.render("inventory/add-inventory", {
       title: "Add Vehicle",
