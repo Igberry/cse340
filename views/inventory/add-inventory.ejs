@@ -15,31 +15,32 @@
         <%- classificationList %> <!-- injects HTML -->
 
           <label for="inv_make">Make</label>
-          <input name="inv_make" type="text" required value="<%= inv_make %>">
+          <input id="inv_make" name="inv_make" type="text" required value="<%= inv_make %>">
 
           <label for="inv_model">Model</label>
-          <input name="inv_model" type="text" required value="<%= inv_model %>">
+          <input id="inv_model" name="inv_model" type="text" required value="<%= inv_model %>">
 
           <label for="inv_description">Description</label>
-          <textarea name="inv_description" required><%= inv_description %></textarea>
+          <textarea id="inv_description" name="inv_description" required><%= inv_description %></textarea>
 
           <label for="inv_price">Price</label>
-          <input name="inv_price" type="number" required value="<%= inv_price %>">
+          <input id="inv_price" name="inv_price" type="number" required value="<%= inv_price %>">
 
           <label for="inv_miles">Miles</label>
-          <input name="inv_miles" type="number" value="<%= inv_miles %>">
+          <input id="inv_miles" name="inv_miles" type="number" value="<%= inv_miles %>">
 
           <label for="inv_year">Year</label>
-          <input name="inv_year" type="text" value="<%= inv_year %>">
+          <input id="inv_year" name="inv_year" type="text" value="<%= inv_year %>">
 
           <label for="inv_image">Image</label>
-          <input name="inv_image" type="text" value="/images/vehicles/no-image.png">
+          <input id="inv_image" name="inv_image" type="text" value="/images/vehicles/no-image.png">
 
           <label for="inv_thumbnail">Thumbnail</label>
-          <input name="inv_thumbnail" type="text" value="/images/vehicles/no-image-tn.png">
+          <input id="inv_thumbnail" name="inv_thumbnail" type="text" value="/images/vehicles/no-image-tn.png">
 
           <label for="inv_color">Color</label>
-          <input name="inv_color" type="text" value="<%= inv_color %>">
+          <input id="inv_color" name="inv_color" type="text" value="<%= inv_color %>">
+
 
           <button type="submit">Add Vehicle</button>
       </form>
