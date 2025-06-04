@@ -17,7 +17,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
-
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 // Setup flash
 app.use(flash());
 

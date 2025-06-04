@@ -1,20 +1,17 @@
 const inventoryModel = require('../models/inventory-model');
 const utils = require('../utilities');
 
-// Define all controller functions first
 const buildAddClassification = async (req, res, next) => {
   try {
     const nav = await utils.getNavList();
     const messages = req.flash("message");
-
-    // Fetch vehicles (you must implement this or get from your model)
-    const vehicles = await inventoryModel.getAllVehicles(); // example function, adapt if needed
+    const vehicles = await inventoryModel.getAllVehicles();
 
     res.render("inventory/add-classification", {
       title: "Add Classification",
       nav,
       messages,
-      vehicles,   // pass vehicles here
+      vehicles,
     });
   } catch (error) {
     next(error);
@@ -102,7 +99,7 @@ const buildDetailView = async (req, res, next) => {
   console.log("Getting detail view for inv_id:", inv_id);
 
   try {
-    const vehicle = await invModel.getVehicleById(inv_id);
+    const vehicle = await inventoryModel.getVehicleById(inv_id);
     console.log("Vehicle found:", vehicle);
 
     if (!vehicle) {
@@ -115,7 +112,7 @@ const buildDetailView = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error fetching vehicle:", error);
-    next(error); // Let the global error handler catch it
+    next(error);
   }
 };
 
@@ -169,13 +166,9 @@ async function getVehicleDetail(req, res, next) {
   }
 }
 
-// In your invController.js
-
 exports.getVehiclesByClassification = async (req, res) => {
   try {
     const classification = req.params.classification.toLowerCase();
-
-    // Assuming you have a function to get vehicles by classification
     const vehicles = await vehicleModel.getVehiclesByClassification(classification);
 
     if (!vehicles || vehicles.length === 0) {
@@ -193,8 +186,6 @@ exports.getVehiclesByClassification = async (req, res) => {
   }
 };
 
-
-// ✅ Export all functions at once
 module.exports = {
   buildAddClassification,
   addClassification,

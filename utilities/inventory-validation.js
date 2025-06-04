@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const utils = require("../utilities");
 
 const inventoryValidationRules = [
     body("classification_id").notEmpty().isInt(),
@@ -14,8 +15,8 @@ const inventoryValidationRules = [
 const checkInventoryData = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return utilities.getNav().then(nav => {
-            return utilities.buildClassificationList(req.body.classification_id).then(classificationList => {
+        return utils.getNavList().then(nav => {
+            return utils.buildClassificationList(req.body.classification_id).then(classificationList => {
                 res.render("inventory/add-inventory", {
                     title: "Add Vehicle",
                     nav,

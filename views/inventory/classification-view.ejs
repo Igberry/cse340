@@ -1,0 +1,22 @@
+<%- include('../partials/head') %>
+    <title>
+        <%= title %>
+    </title>
+
+    <body>
+        <%- include('../partials/header') %>
+
+            <main>
+                <h1>
+                    <%= title %>
+                </h1>
+
+                <% if (grid && grid.includes("<li>")) { %>
+                    <%- grid %>
+                        <% } else { %>
+                            <p class="notice">Sorry, no vehicles could be found under this classification.</p>
+                            <% } %>
+            </main>
+
+            <%- include('../partials/footer') %>
+    </body>
