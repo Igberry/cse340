@@ -24,32 +24,16 @@ async function getVehicleById(inv_id) {
 }
 
 // Get vehicles by classification name (joins inventory with classification table)
-async function getVehiclesByClassification(classification) {
-    try {
-        const sql = `
-            SELECT i.* 
-            FROM inventory i
-            JOIN classification c ON i.classification_id = c.classification_id
-            WHERE LOWER(c.classification_name) = LOWER($1)
-        `;
-        const values = [classification];
-        const result = await pool.query(sql, values);
-        return result.rows;
-    } catch (error) {
-        throw error;
-    }
+async function getVehiclesByClassification(classification_name) {
+    const sql = `
+        SELECT i.* FROM inventory i
+        JOIN classification c ON i.classification_id = c.classification_id
+        WHERE c.classification_name = $1
+    `;
+    const result = await pool.query(sql, [classification_name]);
+    return result.rows;
 }
 
-// Get vehicles by classification ID
-async function getInventoryByClassificationId(classification_id) {
-    try {
-        const sql = "SELECT * FROM inventory WHERE classification_id = $1";
-        const result = await pool.query(sql, [classification_id]);
-        return result.rows;
-    } catch (error) {
-        throw error;
-    }
-}
 
 // Get list of all classifications
 async function getClassifications() {
@@ -68,6 +52,18 @@ async function addClassification(classification_name) {
         const sql = 'INSERT INTO classification (classification_name) VALUES ($1)';
         const result = await pool.query(sql, [classification_name]);
         return result.rowCount;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Get vehicles by classification ID
+async function getInventoryByClassificationId(classification_id) {
+    try {
+        const sql = "SELECT * FROM inventory WHERE classification_id = $1";
+        const values = [classification_id];
+        const result = await pool.query(sql, values);
+        return result.rows;
     } catch (error) {
         throw error;
     }

@@ -98,23 +98,24 @@ const addInventory = async (req, res, next) => {
 };
 
 const buildDetailView = async (req, res, next) => {
+  const inv_id = req.params.inv_id;
+  console.log("Getting detail view for inv_id:", inv_id);
+
   try {
-    const inv_id = req.params.inv_id;
-    const vehicle = await inventoryModel.getVehicleById(inv_id);
+    const vehicle = await invModel.getVehicleById(inv_id);
+    console.log("Vehicle found:", vehicle);
 
     if (!vehicle) {
-      return res.status(404).render('errors/404', { title: 'Vehicle Not Found' });
+      return res.status(404).render("errors/error", { title: "Vehicle Not Found" });
     }
 
-    const detailHTML = utils.buildVehicleDetailHTML(vehicle);
-
-    res.render('inventory/vehicle-detail', {
+    res.render("inventory/details", {
       title: `${vehicle.inv_make} ${vehicle.inv_model}`,
       vehicle,
-      detailHTML,
     });
   } catch (error) {
-    next(error);
+    console.error("Error fetching vehicle:", error);
+    next(error); // Let the global error handler catch it
   }
 };
 
@@ -152,6 +153,47 @@ const getInventory = (req, res) => {
   res.render("inventory");
 };
 
+async function getVehicleDetail(req, res, next) {
+  try {
+    const invId = parseInt(req.params.inv_id);
+    const vehicle = await inventoryModel.getVehicleById(invId);
+    const nav = await utils.getNavList();
+    res.render('inventory/details', {
+      title: `${vehicle.inv_make} ${vehicle.inv_model}`,
+      vehicle,
+    });
+
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+// In your invController.js
+
+exports.getVehiclesByClassification = async (req, res) => {
+  try {
+    const classification = req.params.classification.toLowerCase();
+
+    // Assuming you have a function to get vehicles by classification
+    const vehicles = await vehicleModel.getVehiclesByClassification(classification);
+
+    if (!vehicles || vehicles.length === 0) {
+      return res.status(404).render('no-vehicles', { classification });
+    }
+
+    res.render('inventory', {
+      title: `${classification.charAt(0).toUpperCase() + classification.slice(1)} Vehicles`,
+      vehicles,
+      classification,
+    });
+  } catch (error) {
+    console.error('Error fetching vehicles by classification:', error);
+    res.status(500).render('error', { error });
+  }
+};
+
+
 // ✅ Export all functions at once
 module.exports = {
   buildAddClassification,
@@ -161,5 +203,6 @@ module.exports = {
   addInventory,
   buildDetailView,
   buildByClassificationId,
-  getInventory
+  getInventory,
+  getVehicleDetail
 };

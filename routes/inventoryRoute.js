@@ -21,7 +21,7 @@ router.get('/type/:classification', async (req, res, next) => {
             return res.status(404).render('errors/error', { title: 'No vehicles found' });
         }
 
-        res.render('inventory/add-classification', {
+        res.render('inventory/test-list', {  // <-- make sure this template exists!
             title: `${classification.charAt(0).toUpperCase() + classification.slice(1)} Vehicles`,
             vehicles,
         });

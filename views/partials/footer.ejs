@@ -2,3 +2,14 @@
   <a href="/error-test">Test Error</a>
   <p>© 2025, CSE 340 App</p>
 </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+  });
+</script>
