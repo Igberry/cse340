@@ -6,6 +6,7 @@ const path = require('path');
 const utils = require("./utilities");
 const { injectNavList } = require("./utilities/middleware");
 const baseRoute = require("./routes/baseRoute");
+const invRoutes = require('./routes/inventoryRoute');
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
@@ -30,7 +31,7 @@ app.use((req, res, next) => {
 
 // Serve static files from /public
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/inv', require('./routes/inventoryRoute'));
+app.use('/inv', invRoutes);
 app.use((req, res, next) => {
   console.log(`Request URL: ${req.url}`);
   next();

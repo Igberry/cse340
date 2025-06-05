@@ -116,11 +116,42 @@ const buildDetailView = async (req, res, next) => {
   }
 };
 
-const buildByClassificationId = async (req, res, next) => {
+const classificationHandler = (classification) => async (req, res, next) => {
   try {
-    const classificationId = parseInt(req.params.classification_id);
-    const vehicles = await inventoryModel.getInventoryByClassificationId(classificationId);
-    const classifications = await inventoryModel.getClassifications();
+    const vehicles = await inventoryModel.getVehiclesByClassificationName(classification);
+    const title = `Vehicles - ${classification.charAt(0).toUpperCase() + classification.slice(1)}`;
+
+    if (!vehicles || vehicles.length === 0) {
+      return res.render('inventory/no-vehicles', { classification, title });
+    }
+
+    // Prepare vehicle grid HTML
+    let grid = '<ul class="vehicle-list">';
+    vehicles.forEach(vehicle => {
+      grid += `
+        <li>
+          <a href="/inv/detail/${vehicle.inv_id}">
+            <img src="${vehicle.inv_thumbnail}" alt="${vehicle.inv_make} ${vehicle.inv_model}">
+            <h3>${vehicle.inv_make} ${vehicle.inv_model}</h3>
+            <p>$${vehicle.inv_price.toLocaleString()}</p>
+          </a>
+        </li>
+      `;
+    });
+    grid += '</ul>';
+
+    res.render('inventory/classification-view', { title, grid });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const buildInventoryListByType = async (req, res, next) => {
+  try {
+    const classification = req.params.classification || req.url.split("/").pop();
+    const classification_name = classification.charAt(0).toUpperCase() + classification.slice(1).toLowerCase();
+    const vehicles = await inventoryModel.getVehiclesByClassificationName(classification_name);
+    console.log("Classification:", classification_name);
 
     let grid = '<ul class="vehicle-list">';
     vehicles.forEach(vehicle => {
@@ -136,13 +167,12 @@ const buildByClassificationId = async (req, res, next) => {
     });
     grid += '</ul>';
 
-    res.render('inventory/classification-view', {
-      title: 'Vehicle Listings',
-      navList: classifications,
-      grid
+    return res.render("inventory/classification", {
+      title: classification_name + " Vehicles",
+      grid // pass the grid string, not `vehicles` or `data.rows`
     });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -193,7 +223,8 @@ module.exports = {
   buildAddInventory,
   addInventory,
   buildDetailView,
-  buildByClassificationId,
+  classificationHandler,
   getInventory,
+  buildInventoryListByType,
   getVehicleDetail
 };

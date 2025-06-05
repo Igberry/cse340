@@ -1,5 +1,6 @@
-<h1>Add New Classification</h1>
 <%- include('../partials/head.ejs') %>
+
+  <h1>Add New Classification</h1>
 
   <!-- Flash Messages -->
   <% if (typeof messages !=='undefined' && messages.length> 0) { %>
@@ -8,33 +9,31 @@
     </p>
     <% } %>
 
-      <div class="vehicle-list">
+      <!-- Vehicle List Section -->
+      <div class="add-vehicle-list">
         <% vehicles.forEach(vehicle=> { %>
-          <div class="vehicle-card">
-            <img src="<%= vehicle.inv_image_full %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>"
-              class="vehicle-image" />
-            <h2>
-              <%= vehicle.inv_make %>
-                <%= vehicle.inv_model %> (<%= vehicle.inv_year %>)
-            </h2>
-            <p><strong>Price:</strong> $<%= vehicle.inv_price.toLocaleString() %>
-            </p>
-            <p><strong>Mileage:</strong>
-              <%= vehicle.inv_miles.toLocaleString() %> miles
-            </p>
-            <p>
-              <%= vehicle.inv_description %>
-            </p>
-            <a href="/inv/detail/<%= vehicle.inv_id %>">View Details</a>
+          <div class="add-vehicle-card">
+            <% if (vehicle.inv_image_full && vehicle.inv_image_full.trim() !=='' ) { %>
+              <img src="<%= vehicle.inv_image_full %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>"
+                class="add-vehicle-image" />
+              <% } else { %>
+                <img src="/images/placeholder.png" alt="No image available" class="add-vehicle-image" />
+                <% } %>
+                  <h2>
+                    <%= vehicle.inv_make %>
+                      <%= vehicle.inv_model %> (<%= vehicle.inv_year %>)
+                  </h2>
+                  <p><strong>Price:</strong> $<%= vehicle.inv_price.toLocaleString() %>
+                  </p>
+                  <p><strong>Mileage:</strong>
+                    <%= vehicle.inv_miles.toLocaleString() %> miles
+                  </p>
+                  <p>
+                    <%= vehicle.inv_description %>
+                  </p>
+                  <a href="/inv/detail/<%= vehicle.inv_id %>">View Details</a>
           </div>
           <% }) %>
       </div>
-
-      <form action="/inv/add-classification" method="POST">
-        <label for="classification_name">Classification Name:</label>
-        <input type="text" name="classification_name" id="classification_name" required pattern="^[a-zA-Z0-9]+$"
-          title="No spaces or special characters allowed.">
-        <button type="submit">Add Classification</button>
-      </form>
 
       <%- include('../partials/footer.ejs') %>

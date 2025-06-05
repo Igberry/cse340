@@ -30,9 +30,16 @@ nav {
   background-color: #222;
   color: white;
   width: 100%;
-  justify-content: center;
-  align-content: center;
+  display: flex;
+  justify-content: flex-start;
+  /* Align items to the left */
+  align-items: center;
+  /* Vertically center items */
+  padding: 30px;
+  /* Optional horizontal padding */
+  border-radius: 5px;
 }
+
 
 /* Hamburger Icon */
 .hamburger {
@@ -82,7 +89,10 @@ nav {
 
 .hero img {
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
+  height: auto;
+  border-radius: 20px;
+
 }
 
 .hero-text {
@@ -149,25 +159,218 @@ h1 {
   margin: 0;
 }
 
-/* Responsive Vehicle Container */
-.vehicle-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 2rem;
-  background-color: #f9f9f9;
+/* Base styling for main container */
+.vehicle-detail {
   padding: 2rem;
-  border-radius: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-/* Cards and Lists */
-.vehicle-list {
+/* Flex layout for larger screens */
+.vehicle-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 2rem 1rem;
+  gap: 2rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
 }
+
+/* Vehicle image */
+.vehicle-image {
+  flex: 1 1 300px;
+  max-width: 500px;
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Vehicle info section */
+.vehicle-info {
+  flex: 1 1 300px;
+}
+
+.vehicle-info h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: black;
+}
+
+.vehicle-price {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #2a9d8f;
+}
+
+.vehicle-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.vehicle-info li {
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+.vehicle-info strong {
+  color: #264653;
+}
+
+
+/* Cards and Lists */
+/* Style for the vehicle list container */
+.vehicle-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+/* Style for each vehicle item */
+.vehicle-list li {
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.vehicle-list li:hover {
+  transform: translateY(-5px);
+}
+
+/* Style for vehicle images */
+.vehicle-list img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Style for vehicle text content */
+.vehicle-list h3 {
+  font-size: 1.2rem;
+  margin: 0.5rem 1rem 0 1rem;
+  color: #333;
+}
+
+.vehicle-list p {
+  margin: 0.5rem 1rem 1rem 1rem;
+  font-weight: bold;
+  color: #007BFF;
+}
+
+/* Optional: Center the error message */
+.notice {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #ff3333;
+  margin-top: 2rem;
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  padding: 2rem;
+}
+
+/* Heading */
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+/* Flash Message */
+.flash-message {
+  background-color: #e1f3e1;
+  color: #2e7d32;
+  padding: 1rem;
+  border-left: 5px solid #2e7d32;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Container for Vehicle Cards */
+.add-vehicle-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Individual Vehicle Card */
+.add-vehicle-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-vehicle-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Vehicle Image */
+.add-vehicle-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+/* Vehicle Title */
+.add-vehicle-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #34495e;
+}
+
+/* Vehicle Details */
+.add-vehicle-card p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Link Button */
+.add-vehicle-card a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  background-color: black;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.add-vehicle-card a:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
 
 .vehicle-card {
   width: 280px;
@@ -272,34 +475,48 @@ footer p {
     gap: 1rem;
   }
 
-  .hamburger {
+  nav {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    padding: 1rem;
   }
 
   .nav-links {
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #222;
     display: none;
-    padding: 1rem 0;
-    z-index: 1000;
-  }
-
-  .nav-links.show {
-    display: flex;
-  }
-
-  .nav-links li {
-    width: 100%;
-    padding: 0.5rem 1rem;
+    flex-direction: column;
+    gap: 1rem;
+    background: #444;
+    padding: 1rem;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
   }
 
   .nav-links li a {
-    width: 100%;
-    display: block;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  /* Show nav-links when active */
+  .nav-links.active {
+    display: flex;
+  }
+
+  /* Hamburger menu */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .hamburger span {
+    height: 3px;
+    width: 25px;
+    background: #fff;
   }
 
   .hero {
@@ -330,6 +547,20 @@ footer p {
 
   .vehicle-container {
     flex-direction: column;
+    padding: 1rem;
+  }
+
+  .vehicle-info h2 {
+    font-size: 1.5rem;
+  }
+
+  .vehicle-price {
+    font-size: 1.1rem;
+  }
+
+  .vehicle-image,
+  .vehicle-info {
+    flex: 1 1 100%;
   }
 
   .vehicle-list {

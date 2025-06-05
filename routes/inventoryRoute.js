@@ -4,28 +4,17 @@ const invController = require('../controllers/invController');
 const inventoryModel = require('../models/inventory-model');
 const { checkClassificationName, checkNameData } = require("../utilities/classification-validation");
 const { checkInventoryData, inventoryValidationRules } = require("../utilities/inventory-validation");
+const { classificationHandler } = require('../controllers/invController');
 
 router.get("/inventory", invController.getInventory);
 router.get("/add-inventory", invController.buildAddInventory);
 router.get("/add-classification", invController.buildAddClassification);
 router.get("/", invController.buildManagement);
 router.get('/detail/:inv_id', invController.buildDetailView);
-router.get('/type/:classification', async (req, res, next) => {
-    try {
-        const classification = req.params.classification;
-        const vehicles = await inventoryModel.getVehiclesByClassification(classification);
-
-        if (!vehicles || vehicles.length === 0) {
-            return res.status(404).render('errors/error', { title: 'No vehicles found' });
-        }
-        res.render('inventory/test-list', {  
-            title: `${classification.charAt(0).toUpperCase() + classification.slice(1)} Vehicles`,
-            vehicles,
-        });
-    } catch (error) {
-        next(error);
-    }
-});
+router.get('/type/custom', invController.buildInventoryListByType);
+router.get('/type/sedan', invController.buildInventoryListByType);
+router.get('/type/suv', invController.buildInventoryListByType);
+router.get('/type/truck', invController.buildInventoryListByType);
 
 router.get("/cause-error", (req, res, next) => {
     throw new Error("Intentional server error!");
