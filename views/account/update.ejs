@@ -1,53 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Account</title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    <header>
-        <%- include('../partials/header') %>
-    </header>
-    <main>
-        <h1>Update Account</h1>
+<%- include('../partials/head.ejs') %>
+    <h1>Update Account Information</h1>
 
-        <!-- Display Errors -->
-        <% if (errors.length > 0) { %>
-            <ul class="error-messages">
-                <% errors.forEach(error => { %>
-                    <li><%= error.msg %></li>
-                <% }); %>
-            </ul>
+    <% if (message) { %>
+        <p>
+            <%= message %>
+        </p>
         <% } %>
+            <% if (errors && errors.length> 0) { %>
+                <ul>
+                    <% errors.forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }); %>
+                </ul>
+                <% } %>
 
-        <!-- Account Update Form -->
-        <form action="/account/update" method="post">
-            <label>First Name:</label>
-            <input type="text" name="firstname" value="<%= user.firstname %>" required>
+                    <form action="/accounts/update" method="POST" novalidate>
+                        <input type="hidden" name="account_id" value="<%= account.account_id %>" />
 
-            <label>Last Name:</label>
-            <input type="text" name="lastname" value="<%= user.lastname %>" required>
+                        <label for="firstname">First Name</label>
+                        <input id="firstname" name="firstname" type="text" value="<%= account.firstname %>" required />
 
-            <label>Email:</label>
-            <input type="email" name="email" value="<%= user.email %>" required>
+                        <label for="lastname">Last Name</label>
+                        <input id="lastname" name="lastname" type="text" value="<%= account.lastname %>" required />
 
-            <input type="hidden" name="account_id" value="<%= user.account_id %>">
-            <button type="submit">Update Account</button>
-        </form>
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" value="<%= account.email %>" required />
 
-        <!-- Password Change Form -->
-        <form action="/account/change-password" method="post">
-            <label>New Password:</label>
-            <input type="password" name="password" required>
+                        <input type="submit" value="Update Account" />
+                    </form>
 
-            <input type="hidden" name="account_id" value="<%= user.account_id %>">
-            <button type="submit">Change Password</button>
-        </form>
-    </main>
-    <footer>
-        <%- include('../partials/footer') %>
-    </footer>
-</body>
-</html>
+                    <h1>Change Password</h1>
+
+                    <form action="/accounts/update-password" method="POST" novalidate>
+                        <input type="hidden" name="account_id" value="<%= account.account_id %>" />
+
+                        <label for="newpassword">New Password</label>
+                        <input id="newpassword" name="newpassword" type="password" required
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            title="Password must be at least 8 characters, contain uppercase, lowercase, and a digit." />
+                        <small>Enter a new password to change your current password.</small>
+
+                        <input type="submit" value="Change Password" />
+                    </form>
+
+                    <%- include('../partials/footer.ejs') %>

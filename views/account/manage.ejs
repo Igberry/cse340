@@ -1,25 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Account</title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    <header>
-        <%- include('../partials/header') %>
-    </header>
-    <main>
-        <h2>Welcome <%= user.firstname %></h2>
-        <% if (user.account_type === 'Employee' || user.account_type === 'Admin') { %>
+<%- include('../partials/head.ejs') %>
+
+    <h1>Account Management</h1>
+
+    <% if (account.account_type==='Client' ) { %>
+        <h2>Welcome <%= account.firstname %>
+        </h2>
+        <% } else if (account.account_type==='Employee' || account.account_type==='Admin' ) { %>
+            <h2>Welcome <%= account.firstname %>
+            </h2>
+            <a href="/accounts/update/<%= account.account_id %>">Update Account Information</a>
             <h3>Inventory Management</h3>
-            <p><a href="/inventory/manage">Manage Inventory</a></p>
-        <% } %>
-        <p><a href="/account/update">Update Account Information</a></p>
-    </main>
-    <footer>
-        <%- include('../partials/footer') %>
-    </footer>
-</body>
-</html>
+            <p><a href="/inventory/manage">Go to Inventory Management</a></p>
+            <% } %>
+
+                <% if (account.account_type==='Client' ) { %>
+                    <a href="/accounts/update/<%= account.account_id %>">Update Account Information</a>
+                    <% } %>
+
+
+                        <%- include('../partials/footer.ejs') %>

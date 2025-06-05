@@ -464,6 +464,29 @@ footer p {
   margin: 0.5rem 0 0;
 }
 
+.login-container h2 {
+  text-align: center;
+}
+
+.register-container {
+  text-align: center;
+}
+
+.register-link {
+  text-align: center;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.register-link a {
+  background-color: green;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+}
+
 /* Tablet View: max-width 768px */
 @media (max-width: 768px) {
   header {
