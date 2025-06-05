@@ -66,6 +66,7 @@ async function registerAccount({ firstname, lastname, email, password }) {
     const result = await pool.query(sql, values);
     return result.rows[0];
 }
+
 module.exports = {
     getAccountById,
     checkEmailExists,
