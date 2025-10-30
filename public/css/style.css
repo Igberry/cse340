@@ -26,6 +26,20 @@ header {
   flex-wrap: wrap;
 }
 
+.account-link {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.account-link:hover {
+  background-color: white;
+  color: black;
+}
+
 nav {
   background-color: #222;
   color: white;

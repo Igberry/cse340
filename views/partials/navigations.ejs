@@ -6,9 +6,15 @@
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="/">Home</a></li>
-    <li><a href="/inv/type/custom">Custom</a></li>
-    <li><a href="/inv/type/sedan">Sedan</a></li>
-    <li><a href="/inv/type/suv">SUV</a></li>
-    <li><a href="/inv/type/truck">Truck</a></li>
+
+    <% if (navList && navList.length> 0) { %>
+      <% navList.forEach(classification=> { %>
+        <li>
+          <a href="/inv/type/<%= classification.classification_name.toLowerCase() %>">
+            <%= classification.classification_name %>
+          </a>
+        </li>
+        <% }); %>
+          <% } %>
   </ul>
 </nav>

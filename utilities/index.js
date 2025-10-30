@@ -15,6 +15,16 @@ async function buildClassificationList() {
     throw error;
   }
 }
+async function injectNav(req, res, next) {
+  try {
+    const navList = await getNavList();
+    res.locals.navList = navList;
+    next();
+  } catch (err) {
+    console.error("Nav injection error:", err);
+    next(); // fail silently
+  }
+}
 
 async function getNavList() {
   try {
@@ -45,9 +55,18 @@ function buildVehicleDetailHTML(vehicle) {
     </div>
   `;
 }
-
+function isAuthenticated(req, res, next) {
+  if (req.session.user) {
+    next()
+  } else {
+    req.flash("error", "Please log in to continue")
+    res.redirect("/account/login")
+  }
+}
 module.exports = {
   buildVehicleDetailHTML,
   getNavList,
-  buildClassificationList
+  isAuthenticated,
+  buildClassificationList,
+  injectNav
 };

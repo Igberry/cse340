@@ -1,9 +1,11 @@
 const { validationResult } = require('express-validator');
 const accountsModel = require('../models/accountsModel');
 const bcrypt = require('bcryptjs');
+const db = require("../database");
+
 
 exports.loginView = (req, res) => {
-    res.render('account/login', { errors: [], message: null });
+    res.render('account/login', { message: null });
 };
 exports.processLogin = async (req, res) => {
     const { email, password } = req.body;
@@ -11,7 +13,7 @@ exports.processLogin = async (req, res) => {
     try {
         // Look up account by email
         const sql = "SELECT * FROM accounts WHERE email = $1";
-        const result = await accountModel.pool.query(sql, [email]);
+        const result = await db.query(sql, [email]);
         const account = result.rows[0];
 
         if (!account) {
@@ -26,14 +28,16 @@ exports.processLogin = async (req, res) => {
         const match = await bcrypt.compare(password, account.password);
 
         if (!match) {
-            // Password does not match
             return res.status(401).render("account/login", {
                 title: "Login",
                 message: "Invalid email or password.",
             });
         }
 
-        // Store user session
+        // ✅ Store login state and name for header
+        req.session.loggedin = true;
+        req.session.firstname = account.firstname;
+
         req.session.user = {
             id: account.account_id,
             name: account.firstname,
@@ -41,9 +45,11 @@ exports.processLogin = async (req, res) => {
             type: account.account_type,
         };
 
-        // Redirect to the homepage or dashboard
-        res.redirect("/");
+        // ✅ Flash welcome message
+        req.flash("success", `Welcome back, ${account.firstname}! You have successfully logged in.`);
 
+        // ✅ Redirect to home or dashboard
+        res.redirect("/");
     } catch (err) {
         console.error("Login error:", err);
         res.status(500).render("account/login", {
@@ -90,7 +96,7 @@ exports.processRegistration = async (req, res) => {
 
         if (newAccount) {
             // Redirect to login page after successful registration
-            return res.redirect('/accounts/login');
+            return res.redirect('/account/login');
         } else {
             res.render('account/register', {
                 errors: [],
@@ -111,7 +117,7 @@ exports.registerAccount = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Call model to insert new user
-        const result = await accountModel.registerAccount({
+        const result = await accountsModel.registerAccount({
             firstname,
             lastname,
             email,
@@ -120,15 +126,15 @@ exports.registerAccount = async (req, res) => {
 
         if (result) {
             req.flash("notice", "Registration successful. You can now log in.");
-            res.redirect("/accounts/login");
+            res.redirect("/account/login");
         } else {
             req.flash("notice", "Registration failed. Please try again.");
-            res.redirect("/accounts/register");
+            res.redirect("/account/register");
         }
     } catch (err) {
         console.error("Registration error:", err.message);
         req.flash("notice", "An error occurred. Please try again.");
-        res.redirect("/accounts/register");
+        res.redirect("/account/register");
     }
 };
 exports.accountView = (req, res) => {
@@ -238,6 +244,11 @@ exports.processPasswordUpdate = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-    res.clearCookie('jwt');
-    res.redirect('/');
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Logout error:", err);
+        }
+        res.redirect("/");
+    });
 };
+

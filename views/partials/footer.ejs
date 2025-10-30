@@ -1,6 +1,6 @@
 <footer>
   <a href="/error-test">Test Error</a>
-  <p>© 2025, CSE 340 App</p>
+  <p>&& 2025, CSE 340 App</p>
 </footer>
 
 <script>
@@ -10,4 +10,9 @@
   hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('active');
   });
+
+  setTimeout(() => {
+    const msg = document.querySelector(".success-message, .error-message");
+    if (msg) msg.style.display = "none";
+  }, 3000);
 </script>

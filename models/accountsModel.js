@@ -1,11 +1,11 @@
 // Profile Model
-const pool = require("../database");
+const db = require("../database");
 
 // Get account by account_id
 async function getAccountById(account_id) {
     const sql = 'SELECT account_id, firstname, lastname, email, account_type FROM accounts WHERE account_id = $1';
     const values = [account_id];
-    const result = await pool.query(sql, values);
+    const result = await db.query(sql, values);
     return result.rows[0];
 }
 
@@ -13,7 +13,7 @@ async function getAccountById(account_id) {
 async function checkEmailExists(email, currentAccountId) {
     const sql = 'SELECT account_id FROM accounts WHERE email = $1 AND account_id != $2';
     const values = [email, currentAccountId];
-    const result = await pool.query(sql, values);
+    const result = await db.query(sql, values);
     return result.rows.length > 0;
 }
 
@@ -24,7 +24,7 @@ async function updateAccount({ account_id, firstname, lastname, email }) {
     WHERE account_id = $4
   `;
     const values = [firstname, lastname, email, account_id];
-    const result = await pool.query(sql, values);
+    const result = await db.query(sql, values);
     return result.rowCount > 0;
 }
 
@@ -32,7 +32,7 @@ async function updateAccount({ account_id, firstname, lastname, email }) {
 async function updatePassword(account_id, hashedPassword) {
     const sql = 'UPDATE accounts SET password = $1 WHERE account_id = $2';
     const values = [hashedPassword, account_id];
-    const result = await pool.query(sql, values);
+    const result = await db.query(sql, values);
     return result.rowCount > 0;
 }
 
@@ -40,19 +40,19 @@ async function updatePassword(account_id, hashedPassword) {
 async function getAccountByEmail(email) {
     const sql = 'SELECT * FROM accounts WHERE email = $1';
     const values = [email];
-    const result = await pool.query(sql, values);
+    const result = await db.query(sql, values);
     return result.rows[0];
 }
 
 // Create new account (registration)
-async function createAccount({ firstName, lastName, email, password, account_type = 'Client' }) {
+async function createAccount({ firstname, lastname, email, password, account_type = 'Client' }) {
     const sql = `
         INSERT INTO accounts (first_name, last_name, email, password, account_type)
         VALUES ($1, $2, $3, $4, $5)
         RETURNING account_id
     `;
-    const values = [firstName, lastName, email, password, account_type];
-    const result = await pool.query(sql, values);
+    const values = [firstname, lastname, email, password, account_type];
+    const result = await db.query(sql, values);
     return result.rows[0];
 }
 
@@ -62,8 +62,8 @@ async function registerAccount({ firstname, lastname, email, password }) {
         VALUES ($1, $2, $3, $4, $5)
         RETURNING account_id
     `;
-    const values = [firstName, lastName, email, password, account_type];
-    const result = await pool.query(sql, values);
+    const values = [firstname, lastname, email, password, account_type];
+    const result = await db.query(sql, values);
     return result.rows[0];
 }
 
