@@ -382,7 +382,9 @@ h1 {
   color: white;
 }
 
-
+.notice {
+  color: black;
+}
 .vehicle-card {
   width: 280px;
   background: #f9fafb;
