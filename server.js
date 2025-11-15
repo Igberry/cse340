@@ -51,7 +51,8 @@ app.use((req, res, next) => {
 
 // Use routes
 app.use("/", baseRoute);         // Home and general pages
-app.use("/inv", invRoutes);      // Inventory-related routes
+app.use("/inv", invRoutes);  
+app.use("/account",  accountRoutes)    // Inventory-related routes
 
 
 // 404 error handling

@@ -5,20 +5,23 @@ const db = require("../database");
 
 
 exports.loginView = (req, res) => {
-    res.render('account/login', { message: null });
+    res.render('account/login', {
+        title: "Login",
+        message: null,
+    });
 };
 exports.processLogin = async (req, res) => {
     const { email, password } = req.body;
 
     try {
         // Look up account by email
-        const sql = "SELECT * FROM accounts WHERE email = $1";
+        const sql = "SELECT * FROM account WHERE account_email = $1";
         const result = await db.query(sql, [email]);
         const account = result.rows[0];
-
+       console.log("Account fetched for login:", account);
         if (!account) {
             // No account found
-            return res.status(401).render("account/login", {
+            return res.status(401).render('account/login', {
                 title: "Login",
                 message: "Invalid email or password.",
             });
@@ -49,10 +52,14 @@ exports.processLogin = async (req, res) => {
         req.flash("success", `Welcome back, ${account.firstname}! You have successfully logged in.`);
 
         // ✅ Redirect to home or dashboard
-        res.redirect("/");
+        res.render('account/account', { 
+            title: "Account Dashboard",
+            account: req.session.user ,
+            message: req.flash("success")
+        });
     } catch (err) {
         console.error("Login error:", err);
-        res.status(500).render("account/login", {
+        res.status(500).render('account/login', {
             title: "Login",
             message: "An error occurred. Please try again.",
         });
@@ -64,6 +71,7 @@ exports.registerView = (req, res) => {
 };
 
 exports.processRegistration = async (req, res) => {
+      console.log("Processing registration with data:", req.body);
     const errors = validationResult(req);
     const { firstname, lastname, email, password } = req.body;
 
