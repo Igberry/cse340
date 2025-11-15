@@ -18,12 +18,12 @@
                   <%= vehicle.inv_model %>
             </h2>
             <p class="vehicle-price"><strong>Price:</strong>
-              <%= vehicle.inv_price %>
-            </p>
+  <%= new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(vehicle.inv_price) %>
+</p>
             <ul>
               <li><strong>Mileage:</strong>
-                <%= vehicle.inv_miles %> miles
-              </li>
+  <%= vehicle.inv_miles.toLocaleString() %> miles
+</li>
               <li><strong>Color:</strong>
                 <%= vehicle.inv_color %>
               </li>

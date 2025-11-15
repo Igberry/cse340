@@ -29,6 +29,7 @@ async function injectNav(req, res, next) {
 async function getNavList() {
   try {
     const result = await pool.query("SELECT * FROM classification ORDER BY classification_name");
+    console.log (result.rows)
     return result.rows;
   } catch (error) {
     console.error("Error building nav list:", error);
@@ -45,7 +46,7 @@ function buildVehicleDetailHTML(vehicle) {
 
   return `
     <div class="vehicle-detail">
-      <img src="${vehicle.inv_image_full}" alt="${vehicle.inv_make} ${vehicle.inv_model}" class="vehicle-image" />
+      <img src="${vehicle.inv_image}" alt="${vehicle.inv_make} ${vehicle.inv_model}" class="vehicle-image" />
       <div class="vehicle-info">
         <h2>${vehicle.inv_make} ${vehicle.inv_model} (${vehicle.inv_year})</h2>
         <p><strong>Price:</strong> ${price}</p>

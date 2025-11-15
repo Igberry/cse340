@@ -6,15 +6,19 @@ const { checkClassificationName, checkNameData } = require("../utilities/classif
 const { checkInventoryData, inventoryValidationRules } = require("../utilities/inventory-validation");
 const { classificationHandler } = require('../controllers/invController');
 
+
 router.get("/inventory", invController.getInventory);
 router.get("/add-inventory", invController.buildAddInventory);
 router.get("/add-classification", invController.buildAddClassification);
 router.get("/", invController.buildManagement);
 router.get('/detail/:inv_id', invController.buildDetailView);
+router.get('/type/:classification_name', invController.buildInventoryListByType);
 router.get('/type/custom', invController.buildInventoryListByType);
 router.get('/type/sedan', invController.buildInventoryListByType);
 router.get('/type/suv', invController.buildInventoryListByType);
 router.get('/type/truck', invController.buildInventoryListByType);
+
+
 
 router.get("/cause-error", (req, res, next) => {
     throw new Error("Intentional server error!");

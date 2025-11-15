@@ -26,14 +26,15 @@ async function getVehicleById(inv_id) {
 // Get vehicles by classification name (joins inventory with classification table)
 async function getVehiclesByClassificationName(classification_name) {
     const sql = `
-  SELECT inv_id, inv_make, inv_model, inv_price, inv_thumbnail
+SELECT inv_id, inv_make, inv_model, inv_price, inv_thumbnail
   FROM inventory
   JOIN classification
     ON inventory.classification_id = classification.classification_id
-  WHERE classification.classification_name ILIKE $1
+  WHERE classification.classification_name = $1
   ORDER BY inv_make, inv_model;
 `;
     const data = await pool.query(sql, [classification_name]);
+    console.log(data.rows);
     return data.rows;
 }
 

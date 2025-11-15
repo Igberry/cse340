@@ -10,7 +10,7 @@
     <% if (navList && navList.length> 0) { %>
       <% navList.forEach(classification=> { %>
         <li>
-          <a href="/inv/type/<%= classification.classification_name.toLowerCase() %>">
+          <a href="/inv/type/<%= classification.classification_name %>">
             <%= classification.classification_name %>
           </a>
         </li>

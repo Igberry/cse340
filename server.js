@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 // Use routes
 app.use("/", baseRoute);         // Home and general pages
 app.use("/inv", invRoutes);      // Inventory-related routes
-app.use("/", accountRoutes);     // Account-related routes
+
 
 // 404 error handling
 app.use((req, res) => {
