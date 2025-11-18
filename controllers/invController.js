@@ -150,7 +150,7 @@ const buildInventoryListByType = async (req, res, next) => {
   try {
     
     const classification = req.params.classification || req.url.split("/").pop();
-    const classification_name = classification.charAt(0).toUpperCase() + classification.slice(1).toLowerCase();
+    const classification_name = classification.toUpperCase() === 'SUV' ? 'SUV' : classification.charAt(0).toUpperCase() + classification.slice(1).toLowerCase();
   
     console.log("Requested classification:", classification_name);
     const vehicles = await inventoryModel.getVehiclesByClassificationName(classification_name);
