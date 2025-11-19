@@ -17,9 +17,9 @@
           <div class="add-vehicle-card">
             <% if (vehicle.inv_image_full && vehicle.inv_image_full.trim() !=='' ) { %>
               <img src="<%= vehicle.inv_image_full %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>"
-                class="add-vehicle-image" />
+                class="add-vehicle-image">
               <% } else { %>
-                <img src="/images/placeholder.png" alt="No image available" class="add-vehicle-image" />
+                <img src="/images/placeholder.png" alt="No image available" class="add-vehicle-image">
                 <% } %>
                   <h2>
                     <%= vehicle.inv_make %>
@@ -39,7 +39,7 @@
       </div>
       <form action="/inv/add-classification" method="post">
         <label for="classification_name">Classification Name</label>
-        <input type="text" name="classification_name" required pattern="^[A-Za-z]+$" title="Only letters allowed">
+        <input id="classification_name" type="text" name="classification_name" required pattern="^[A-Za-z]+$" title="Only letters allowed">
         <button type="submit">Add</button>
       </form>
 

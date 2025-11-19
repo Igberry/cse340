@@ -30,19 +30,19 @@
           <input type="number" id="inv_price" name="inv_price" required value="<%= inv_price || '' %>">
 
           <label for="inv_miles">Miles</label>
-          <input type="number" id="inv_miles" name="inv_miles" value="<%= inv_miles || '' %>">
+          <input type="number" id="inv_miles" name="inv_miles" required min="0" value="<%= inv_miles || '' %>">
 
           <label for="inv_year">Year</label>
-          <input type="text" id="inv_year" name="inv_year" value="<%= inv_year || '' %>">
+          <input type="number" id="inv_year" name="inv_year" required min="1886" max="9999" value="<%= inv_year || '' %>">
 
           <label for="inv_image">Image Path</label>
-          <input type="text" id="inv_image" name="inv_image" value="/images/vehicles/no-image.png">
+          <input type="text" id="inv_image" name="inv_image" required value="<%= inv_image || '/images/vehicles/no-image.png' %>">
 
           <label for="inv_thumbnail">Thumbnail Path</label>
-          <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="/images/vehicles/no-image-tn.png">
+          <input type="text" id="inv_thumbnail" name="inv_thumbnail" required value="<%= inv_thumbnail || '/images/vehicles/no-image-tn.png' %>">
 
           <label for="inv_color">Color</label>
-          <input type="text" id="inv_color" name="inv_color" value="<%= inv_color || '' %>">
+          <input type="text" id="inv_color" name="inv_color" required value="<%= inv_color || '' %>">
 
           <button type="submit">Add Vehicle</button>
       </form>

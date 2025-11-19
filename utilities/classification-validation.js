@@ -1,4 +1,6 @@
 const { body, validationResult } = require("express-validator");
+const utils = require("../utilities");
+const inventoryModel = require("../models/inventory-model");
 
 const checkClassificationName = [
     body("classification_name")
@@ -9,15 +11,21 @@ const checkClassificationName = [
         .withMessage("Classification name is required")
 ];
 
-const checkNameData = (req, res, next) => {
+const checkNameData = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        const nav = require("../utilities/index").getNavList();
-        return res.render("inventory/add-classification", {
-            title: "Add Classification",
-            nav,
-            errors: errors.array(),
-        });
+        try {
+            const nav = await utils.getNavList();
+            const vehicles = await inventoryModel.getAllVehicles();
+            return res.render("inventory/add-classification", {
+                title: "Add Classification",
+                nav,
+                errors: errors.array(),
+                vehicles
+            });
+        } catch (err) {
+            return next(err);
+        }
     }
     next();
 };
