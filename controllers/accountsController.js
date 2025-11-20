@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const accountsModel = require('../models/accountsModel');
 const bcrypt = require('bcryptjs');
 const db = require("../database");
+const jwt = require('jsonwebtoken');
 
 
 exports.loginView = (req, res) => {
@@ -47,6 +48,20 @@ exports.processLogin = async (req, res) => {
             email: account.email,
             type: account.account_type,
         };
+
+        // Create JWT token for client-side auth/authorization (expires in 2 hours)
+        try {
+            const payload = {
+                account_id: account.account_id,
+                firstname: account.firstname,
+                account_type: account.account_type,
+            };
+            const token = jwt.sign(payload, process.env.JWT_SECRET || 'devsecret', { expiresIn: '2h' });
+            // Set cookie (HTTP only)
+            res.cookie('jwt', token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 });
+        } catch (err) {
+            console.error('JWT sign error:', err);
+        }
 
         // ✅ Flash welcome message
         req.flash("success", `Welcome back, ${account.firstname}! You have successfully logged in.`);
@@ -256,6 +271,8 @@ exports.logout = (req, res) => {
         if (err) {
             console.error("Logout error:", err);
         }
+        // clear jwt cookie as well
+        res.clearCookie('jwt');
         res.redirect("/");
     });
 };

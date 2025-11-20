@@ -10,13 +10,13 @@
         <% } else if (account.account_type==='Employee' || account.account_type==='Admin' ) { %>
             <h2>Welcome <%= account.firstname %>
             </h2>
-            <a href="/accounts/update/<%= account.account_id %>">Update Account Information</a>
+            <a href="/account/update/<%= account.account_id %>">Update Account Information</a>
             <h3>Inventory Management</h3>
-            <p><a href="/inventory/manage">Go to Inventory Management</a></p>
+            <p><a href="/inv">Go to Inventory Management</a></p>
             <% } %>
 
                 <% if (account.account_type==='Client' ) { %>
-                    <a href="/accounts/update/<%= account.account_id %>">Update Account Information</a>
+                    <a href="/account/update/<%= account.account_id %>">Update Account Information</a>
                     <% } %>
 
 

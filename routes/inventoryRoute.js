@@ -5,11 +5,13 @@ const inventoryModel = require('../models/inventory-model');
 const { checkClassificationName, checkNameData } = require("../utilities/classification-validation");
 const { checkInventoryData, inventoryValidationRules } = require("../utilities/inventory-validation");
 const { classificationHandler } = require('../controllers/invController');
+const { requireEmployeeOrAdmin } = require('../middleware/auth');
 
 
 router.get("/inventory", invController.getInventory);
-router.get("/add-inventory", invController.buildAddInventory);
-router.get("/add-classification", invController.buildAddClassification);
+// Admin/Employee-only pages (add/edit/delete)
+router.get("/add-inventory", requireEmployeeOrAdmin, invController.buildAddInventory);
+router.get("/add-classification", requireEmployeeOrAdmin, invController.buildAddClassification);
 router.get("/", invController.buildManagement);
 router.get('/detail/:inv_id', invController.buildDetailView);
 router.get('/type/:classification_name', invController.buildInventoryListByType);
@@ -26,6 +28,7 @@ router.get("/cause-error", (req, res, next) => {
 
 router.post(
     "/add-classification",
+    requireEmployeeOrAdmin,
     checkClassificationName,
     checkNameData,
     invController.addClassification
@@ -33,6 +36,7 @@ router.post(
 
 router.post(
     "/add-inventory",
+    requireEmployeeOrAdmin,
     inventoryValidationRules,
     checkInventoryData,
     invController.addInventory
