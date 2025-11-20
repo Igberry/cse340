@@ -4,6 +4,17 @@
 
   <h1>Add New Classification</h1>
 
+  <!-- Error Messages -->
+  <% if (typeof errors !=='undefined' && errors.length> 0) { %>
+    <ul class="error-list">
+      <% errors.forEach(err=> { %>
+        <li class="error-message">
+          <%= err.msg %>
+        </li>
+        <% }) %>
+    </ul>
+    <% } %>
+
   <!-- Flash Messages -->
   <% if (typeof messages !=='undefined' && messages.length> 0) { %>
     <p class="flash-message">
