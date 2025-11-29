@@ -35,6 +35,12 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+// ✅ Make logged-in user available in all views
+app.use((req, res, next) => {
+  res.locals.account = req.session.user || null;
+  next();
+});
+
 app.use(checkLogin);
 app.use(flash());
 
@@ -52,8 +58,7 @@ app.use((req, res, next) => {
 // Use routes
 app.use("/", baseRoute);         // Home and general pages
 app.use("/inv", invRoutes);  
-app.use("/account",  accountRoutes)    // Inventory-related routes
-
+app.use("/account", accountRoutes); // Account-related routes
 
 // 404 error handling
 app.use((req, res) => {
@@ -62,8 +67,6 @@ app.use((req, res) => {
   });
 });
 
-
-
 // Global error handling
 app.use((err, req, res, next) => {
   console.error("Global Error:", err);
@@ -71,8 +74,6 @@ app.use((err, req, res, next) => {
     message: err.message || "Something went wrong on the server."
   });
 });
-
-
 
 // Start server
 const PORT = process.env.PORT || 3000;

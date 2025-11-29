@@ -2,50 +2,47 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navigations') %>
 
-    <h1>Update Account Information</h1>
+<h1>Update Account Information</h1>
 
-    <% if (message) { %>
-        <p>
-            <%= message %>
-        </p>
-        <% } %>
-            <% if (errors && errors.length> 0) { %>
-                <ul>
-                    <% errors.forEach(error=> { %>
-                        <li>
-                            <%= error.msg %>
-                        </li>
-                        <% }); %>
-                </ul>
-                <% } %>
+<% if (message) { %>
+    <p class="flash-message"><%= message %></p>
+<% } %>
 
-                    <form action="/account/update" method="POST" novalidate>
-                        <input type="hidden" name="account_id" value="<%= account.account_id %>" />
+<% if (errors && errors.length > 0) { %>
+    <ul class="error-list">
+        <% errors.forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }) %>
+    </ul>
+<% } %>
 
-                        <label for="firstname">First Name</label>
-                        <input id="firstname" name="firstname" type="text" value="<%= account.firstname %>" required />
+<form action="/account/update" method="POST" novalidate>
+    <input type="hidden" name="account_id" value="<%= account.account_id %>" />
 
-                        <label for="lastname">Last Name</label>
-                        <input id="lastname" name="lastname" type="text" value="<%= account.lastname %>" required />
+    <label for="firstname">First Name</label>
+    <input id="firstname" name="firstname" type="text" value="<%= account.firstname %>" required />
 
-                        <label for="email">Email</label>
-                        <input id="email" name="email" type="email" value="<%= account.email %>" required />
+    <label for="lastname">Last Name</label>
+    <input id="lastname" name="lastname" type="text" value="<%= account.lastname %>" required />
 
-                        <input type="submit" value="Update Account" />
-                    </form>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" value="<%= account.email %>" required />
 
-                    <h1>Change Password</h1>
+    <input type="submit" value="Update Account" />
+</form>
 
-                    <form action="/account/update-password" method="POST" novalidate>
-                        <input type="hidden" name="account_id" value="<%= account.account_id %>" />
+<h1>Change Password</h1>
 
-                        <label for="newpassword">New Password</label>
-                        <input id="newpassword" name="newpassword" type="password" required
-                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                            title="Password must be at least 8 characters, contain uppercase, lowercase, and a digit." />
-                        <small>Enter a new password to change your current password.</small>
+<form action="/account/update-password" method="POST" novalidate>
+    <input type="hidden" name="account_id" value="<%= account.account_id %>" />
 
-                        <input type="submit" value="Change Password" />
-                    </form>
+    <label for="newpassword">New Password</label>
+    <input id="newpassword" name="newpassword" type="password" required
+        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+        title="Password must be at least 8 characters, contain uppercase, lowercase, and a digit." />
+    <small>Enter a new password to change your current password.</small>
 
-                    <%- include('../partials/footer.ejs') %>
+    <input type="submit" value="Change Password" />
+</form>
+
+<%- include('../partials/footer.ejs') %>

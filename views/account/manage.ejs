@@ -2,22 +2,21 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navigations') %>
 
-    <h1>Account Management</h1>
+<h1>Account Management</h1>
 
-    <% if (account.account_type==='Client' ) { %>
-        <h2>Welcome <%= account.firstname %>
-        </h2>
-        <% } else if (account.account_type==='Employee' || account.account_type==='Admin' ) { %>
-            <h2>Welcome <%= account.firstname %>
-            </h2>
-            <a href="/account/update/<%= account.account_id %>">Update Account Information</a>
-            <h3>Inventory Management</h3>
-            <p><a href="/inv">Go to Inventory Management</a></p>
-            <% } %>
+<% if (message) { %>
+    <p class="flash-message"><%= message %></p>
+<% } %>
 
-                <% if (account.account_type==='Client' ) { %>
-                    <a href="/account/update/<%= account.account_id %>">Update Account Information</a>
-                    <% } %>
+<h2>Welcome, <%= account.firstname %></h2>
 
+<p>Account Type: <%= account.account_type %></p>
 
-                        <%- include('../partials/footer.ejs') %>
+<a href="/account/update/<%= account.account_id %>">Update Account Information</a>
+
+<% if (account.account_type === 'Employee' || account.account_type === 'Admin') { %>
+    <h3>Inventory Management</h3>
+    <p><a href="/inv">Go to Inventory Management</a></p>
+<% } %>
+
+<%- include('../partials/footer.ejs') %>

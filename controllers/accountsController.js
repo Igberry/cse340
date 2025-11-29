@@ -4,33 +4,30 @@ const bcrypt = require('bcryptjs');
 const db = require("../database");
 const jwt = require('jsonwebtoken');
 
-
 exports.loginView = (req, res) => {
     res.render('account/login', {
         title: "Login",
         message: null,
     });
 };
+
 exports.processLogin = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Look up account by email
-        const sql = "SELECT * FROM account WHERE account_email = $1";
+        const sql = "SELECT * FROM accounts WHERE account_email = $1";
         const result = await db.query(sql, [email]);
         const account = result.rows[0];
-       console.log("Account fetched for login:", account);
+        console.log("Account fetched for login:", account);
+
         if (!account) {
-            // No account found
             return res.status(401).render('account/login', {
                 title: "Login",
                 message: "Invalid email or password.",
             });
         }
 
-        // Compare provided password with hashed password
-        const match = await bcrypt.compare(password, account.password);
-
+        const match = await bcrypt.compare(password, account.account_password);
         if (!match) {
             return res.status(401).render("account/login", {
                 title: "Login",
@@ -38,40 +35,39 @@ exports.processLogin = async (req, res) => {
             });
         }
 
-        // ✅ Store login state and name for header
+        // Store session info
         req.session.loggedin = true;
-        req.session.firstname = account.firstname;
+        req.session.firstname = account.account_firstname;
 
         req.session.user = {
-            id: account.account_id,
-            name: account.firstname,
-            email: account.email,
-            type: account.account_type,
+            account_id: account.account_id,
+            firstname: account.account_firstname,
+            email: account.account_email,
+            account_type: account.account_type,
         };
 
-        // Create JWT token for client-side auth/authorization (expires in 2 hours)
+        // JWT token
         try {
             const payload = {
                 account_id: account.account_id,
-                firstname: account.firstname,
+                firstname: account.account_firstname,
                 account_type: account.account_type,
             };
             const token = jwt.sign(payload, process.env.JWT_SECRET || 'devsecret', { expiresIn: '2h' });
-            // Set cookie (HTTP only)
             res.cookie('jwt', token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 });
         } catch (err) {
             console.error('JWT sign error:', err);
         }
 
-        // ✅ Flash welcome message
-        req.flash("success", `Welcome back, ${account.firstname}! You have successfully logged in.`);
+        // Flash message
+        req.flash("success", `Welcome back, ${account.account_firstname}! You have successfully logged in.`);
 
-        // ✅ Redirect to home or dashboard
         res.render('account/account', { 
             title: "Account Dashboard",
-            account: req.session.user ,
-            message: req.flash("success")
+            account: req.session.user,
+            message: req.flash("success")[0]
         });
+
     } catch (err) {
         console.error("Login error:", err);
         res.status(500).render('account/login', {
@@ -86,7 +82,7 @@ exports.registerView = (req, res) => {
 };
 
 exports.processRegistration = async (req, res) => {
-      console.log("Processing registration with data:", req.body);
+    console.log("Processing registration with data:", req.body);
     const errors = validationResult(req);
     const { firstname, lastname, email, password } = req.body;
 
@@ -114,11 +110,10 @@ exports.processRegistration = async (req, res) => {
             lastname,
             email,
             password: hashedPassword,
-            account_type: 'client' // or whatever default type you want
+            account_type: 'client'
         });
 
         if (newAccount) {
-            // Redirect to login page after successful registration
             return res.redirect('/account/login');
         } else {
             res.render('account/register', {
@@ -132,56 +127,31 @@ exports.processRegistration = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
-exports.registerAccount = async (req, res) => {
-    const { firstname, lastname, email, password } = req.body;
 
-    try {
-        // Hash password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Call model to insert new user
-        const result = await accountsModel.registerAccount({
-            firstname,
-            lastname,
-            email,
-            password: hashedPassword,
-        });
-
-        if (result) {
-            req.flash("notice", "Registration successful. You can now log in.");
-            res.redirect("/account/login");
-        } else {
-            req.flash("notice", "Registration failed. Please try again.");
-            res.redirect("/account/register");
-        }
-    } catch (err) {
-        console.error("Registration error:", err.message);
-        req.flash("notice", "An error occurred. Please try again.");
-        res.redirect("/account/register");
-    }
-};
 exports.accountView = (req, res) => {
     if (req.session && req.session.user) {
-        // User is logged in, show account page (you can render account details page here)
         res.render('account/account', { account: req.session.user });
     } else {
-        // User not logged in, show login page instead
         res.render('account/login', { message: null });
     }
 };
 
-
 exports.manageAccount = async (req, res) => {
     try {
-        // Use account info from res.locals or req.account
-        const account = res.locals.account;
-        if (!account) {
-            return res.redirect('/account/login');
-        }
-        // Get full fresh account info from DB by account_id
+        const account = res.locals.account || req.session.user;
+        if (!account) return res.redirect('/account/login');
+
         const fullAccount = await accountsModel.getAccountById(account.account_id);
-        res.render('account/manage', { account: fullAccount, message: null });
+        res.locals.account = fullAccount;
+
+        const message = req.flash('success')[0] || null;
+
+        res.render('account/manage', {
+            account: fullAccount,
+            message
+        });
     } catch (err) {
+        console.error(err);
         res.status(500).send('Server error');
     }
 };
@@ -190,11 +160,12 @@ exports.updateAccountView = async (req, res) => {
     try {
         const account_id = req.params.account_id;
         const account = await accountsModel.getAccountById(account_id);
-        if (!account) {
-            return res.redirect('/account/manage');
-        }
+        if (!account) return res.redirect('/account/manage');
+
+        res.locals.account = account;
         res.render('account/update', { account, errors: [], message: null });
     } catch (err) {
+        console.error(err);
         res.status(500).send('Server error');
     }
 };
@@ -214,10 +185,17 @@ exports.processAccountUpdate = async (req, res) => {
     try {
         const result = await accountsModel.updateAccount({ account_id, firstname, lastname, email });
         if (result) {
+            // Fetch the updated account info
             const updatedAccount = await accountsModel.getAccountById(account_id);
+
+            // Update session and res.locals for consistent display
+            req.session.user = updatedAccount;
+            res.locals.account = updatedAccount;
+
+            req.flash('success', 'Account information updated successfully.');
             res.render('account/manage', {
                 account: updatedAccount,
-                message: 'Account information updated successfully.',
+                message: req.flash('success')[0]
             });
         } else {
             res.render('account/update', {
@@ -227,6 +205,7 @@ exports.processAccountUpdate = async (req, res) => {
             });
         }
     } catch (err) {
+        console.error(err);
         res.status(500).send('Server error');
     }
 };
@@ -237,43 +216,44 @@ exports.processPasswordUpdate = async (req, res) => {
 
     if (!errors.isEmpty()) {
         const account = await accountsModel.getAccountById(account_id);
-        return res.render('account/update', {
-            account,
-            errors: errors.array(),
-            message: null,
-        });
+        return res.render('account/update', { account, errors: errors.array(), message: null });
     }
 
     try {
         const hashedPassword = await bcrypt.hash(newpassword, 10);
         const result = await accountsModel.updatePassword(account_id, hashedPassword);
+
         if (result) {
             const updatedAccount = await accountsModel.getAccountById(account_id);
+
+            // Update session and res.locals for consistent display
+            req.session.user = updatedAccount;
+            res.locals.account = updatedAccount;
+
+            req.flash('success', 'Password updated successfully.');
             res.render('account/manage', {
                 account: updatedAccount,
-                message: 'Password updated successfully.',
+                message: req.flash('success')[0]
             });
         } else {
             const account = await accountsModel.getAccountById(account_id);
             res.render('account/update', {
                 account,
                 errors: [],
-                message: 'Failed to update password.',
+                message: 'Failed to update password.'
             });
         }
     } catch (err) {
+        console.error(err);
         res.status(500).send('Server error');
     }
 };
 
+
 exports.logout = (req, res) => {
     req.session.destroy((err) => {
-        if (err) {
-            console.error("Logout error:", err);
-        }
-        // clear jwt cookie as well
+        if (err) console.error("Logout error:", err);
         res.clearCookie('jwt');
         res.redirect("/");
     });
 };
-

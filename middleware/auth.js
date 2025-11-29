@@ -15,6 +15,7 @@ function requireEmployeeOrAdmin(req, res, next) {
 
     if (decoded.account_type === 'Employee' || decoded.account_type === 'Admin') {
       req.account = decoded; // Attach decoded account to request
+      res.locals.account = decoded;
       return next();
     } else {
       return res.status(403).render('account/login', {
