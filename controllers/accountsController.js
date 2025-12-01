@@ -62,11 +62,7 @@ exports.processLogin = async (req, res) => {
         // Flash message
         req.flash("success", `Welcome back, ${account.account_firstname}! You have successfully logged in.`);
 
-        res.render('account/account', { 
-            title: "Account Dashboard",
-            account: req.session.user,
-            message: req.flash("success")[0]
-        });
+        res.redirect('/account/manage');
 
     } catch (err) {
         console.error("Login error:", err);
@@ -78,7 +74,7 @@ exports.processLogin = async (req, res) => {
 };
 
 exports.registerView = (req, res) => {
-    res.render('account/register', { errors: [], message: null });
+    res.render('account/register', { errors: [], message: null, account: {} });
 };
 
 exports.processRegistration = async (req, res) => {
@@ -110,7 +106,7 @@ exports.processRegistration = async (req, res) => {
             lastname,
             email,
             password: hashedPassword,
-            account_type: 'client'
+            account_type: req.body.account_type || 'Client'
         });
 
         if (newAccount) {

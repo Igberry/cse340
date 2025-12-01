@@ -12,7 +12,7 @@ router.get("/inventory", invController.getInventory);
 // Admin/Employee-only pages (add/edit/delete)
 router.get("/add-inventory", requireEmployeeOrAdmin, invController.buildAddInventory);
 router.get("/add-classification", requireEmployeeOrAdmin, invController.buildAddClassification);
-router.get("/", invController.buildManagement);
+router.get("/", requireEmployeeOrAdmin, invController.buildManagement);
 router.get('/detail/:inv_id', invController.buildDetailView);
 router.get('/type/:classification_name', invController.buildInventoryListByType);
 router.get('/type/custom', invController.buildInventoryListByType);

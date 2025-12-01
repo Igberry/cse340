@@ -11,7 +11,7 @@ function requireEmployeeOrAdmin(req, res, next) {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'devsecret');
 
     if (decoded.account_type === 'Employee' || decoded.account_type === 'Admin') {
       req.account = decoded; // Attach decoded account to request
@@ -23,6 +23,7 @@ function requireEmployeeOrAdmin(req, res, next) {
       });
     }
   } catch (err) {
+    console.error('JWT verification error:', err);
     return res.status(401).render('account/login', {
       message: 'Invalid or expired token.',
     });
@@ -40,8 +41,38 @@ function isAuthenticated(req, res, next) {
   }
 }
 
-// Export both middlewares
+// Middleware to restrict access to Admin only
+function requireAdmin(req, res, next) {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.status(401).render('account/login', {
+      message: 'You must be logged in as an administrator.',
+    });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'devsecret');
+
+    if (decoded.account_type === 'Admin') {
+      req.account = decoded;
+      res.locals.account = decoded;
+      return next();
+    } else {
+      return res.status(403).render('account/login', {
+        message: 'Access restricted to administrators only.',
+      });
+    }
+  } catch (err) {
+    console.error('JWT verification error:', err);
+    return res.status(401).render('account/login', {
+      message: 'Invalid or expired token.',
+    });
+  }
+}
+
+// Export all middlewares
 module.exports = {
   requireEmployeeOrAdmin,
+  requireAdmin,
   isAuthenticated,
 };

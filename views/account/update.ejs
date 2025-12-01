@@ -16,31 +16,31 @@
     </ul>
 <% } %>
 
+<h2>Account Update</h2>
 <form action="/account/update" method="POST" novalidate>
     <input type="hidden" name="account_id" value="<%= account.account_id %>" />
 
-    <label for="firstname">First Name</label>
-    <input id="firstname" name="firstname" type="text" value="<%= account.firstname %>" required />
+    <label for="firstname">First Name:</label>
+    <input id="firstname" name="firstname" type="text" value="<%= account.account_firstname || account.firstname || '' %>" required />
 
-    <label for="lastname">Last Name</label>
-    <input id="lastname" name="lastname" type="text" value="<%= account.lastname %>" required />
+    <label for="lastname">Last Name:</label>
+    <input id="lastname" name="lastname" type="text" value="<%= account.account_lastname || account.lastname || '' %>" required />
 
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" value="<%= account.email %>" required />
+    <label for="email">Email Address:</label>
+    <input id="email" name="email" type="email" value="<%= account.account_email || account.email || '' %>" required />
 
     <input type="submit" value="Update Account" />
 </form>
 
-<h1>Change Password</h1>
-
+<h2>Change Password</h2>
 <form action="/account/update-password" method="POST" novalidate>
     <input type="hidden" name="account_id" value="<%= account.account_id %>" />
 
-    <label for="newpassword">New Password</label>
+    <label for="newpassword">New Password:</label>
     <input id="newpassword" name="newpassword" type="password" required
         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
         title="Password must be at least 8 characters, contain uppercase, lowercase, and a digit." />
-    <small>Enter a new password to change your current password.</small>
+    <p><small>Enter a new password to change your current password. Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one number.</small></p>
 
     <input type="submit" value="Change Password" />
 </form>

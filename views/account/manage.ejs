@@ -8,11 +8,9 @@
     <p class="flash-message"><%= message %></p>
 <% } %>
 
-<h2>Welcome, <%= account.firstname %></h2>
+<h2>Welcome <%= account.account_firstname %></h2>
 
-<p>Account Type: <%= account.account_type %></p>
-
-<a href="/account/update/<%= account.account_id %>">Update Account Information</a>
+<p><a href="/account/update/<%= account.account_id %>">Update Account Information</a></p>
 
 <% if (account.account_type === 'Employee' || account.account_type === 'Admin') { %>
     <h3>Inventory Management</h3>
