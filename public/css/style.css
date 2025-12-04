@@ -742,7 +742,7 @@ footer p {
 .avg-rating {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #ff6b00;
+  color: #d35400;
 }
 
 .review-count {
@@ -811,7 +811,7 @@ footer p {
 }
 
 .review-date {
-  color: #999;
+  color: black;
   font-size: 0.9rem;
   margin: 0.5rem 0;
 }
