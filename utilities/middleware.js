@@ -7,7 +7,9 @@ const injectNavList = async (req, res, next) => {
     res.locals.navList = navList;
     next();
   } catch (error) {
-    next(error);
+    console.error("Nav injection error:", error);
+    res.locals.navList = []; // Set empty array to prevent template errors
+    next(); // Continue without failing the entire request
   }
 };
 

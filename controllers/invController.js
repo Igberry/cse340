@@ -99,6 +99,7 @@ const buildDetailView = async (req, res, next) => {
   console.log("Getting detail view for inv_id:", inv_id);
 
   try {
+    const reviewModel = require('../models/reviewModel');
     const vehicle = await inventoryModel.getVehicleById(inv_id);
     console.log("Vehicle found:", vehicle);
 
@@ -106,9 +107,16 @@ const buildDetailView = async (req, res, next) => {
       return res.status(404).render("errors/error", { title: "Vehicle Not Found" });
     }
 
+    // Get reviews and average rating for this vehicle
+    const reviews = await reviewModel.getReviewsByVehicleId(inv_id);
+    const ratingData = await reviewModel.getAverageRating(inv_id);
+
     res.render("inventory/details", {
       title: `${vehicle.inv_make} ${vehicle.inv_model}`,
       vehicle,
+      reviews,
+      avgRating: parseFloat(ratingData.avg_rating).toFixed(1),
+      reviewCount: ratingData.review_count
     });
   } catch (error) {
     console.error("Error fetching vehicle:", error);

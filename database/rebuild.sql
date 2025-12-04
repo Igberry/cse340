@@ -1,19 +1,18 @@
+-- Complete Database Rebuild Script for CSE340
 -- Drop tables if they already exist (optional, good for resetting during testing)
-DROP TABLE IF EXISTS inventory;
-DROP TABLE IF EXISTS classification;
-DROP TABLE IF EXISTS account;
-DROP TYPE IF EXISTS account_type_enum;
--- 1. Create ENUM Type for account_type
-CREATE TYPE account_type_enum AS ENUM ('Client', 'Admin');
--- 2. Create Tables
--- Account Table
-CREATE TABLE account (
+DROP TABLE IF EXISTS inventory CASCADE;
+DROP TABLE IF EXISTS classification CASCADE;
+DROP TABLE IF EXISTS accounts CASCADE;
+
+-- 1. Create Tables
+-- Accounts Table (plural - matches application)
+CREATE TABLE accounts (
     account_id SERIAL PRIMARY KEY,
     account_firstname VARCHAR(50) NOT NULL,
     account_lastname VARCHAR(50) NOT NULL,
     account_email VARCHAR(100) UNIQUE NOT NULL,
     account_password VARCHAR(255) NOT NULL,
-    account_type account_type_enum DEFAULT 'Client'
+    account_type VARCHAR(20) DEFAULT 'Client' CHECK (account_type IN ('Client', 'Employee', 'Admin'))
 );
 -- Classification Table
 CREATE TABLE classification (

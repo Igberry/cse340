@@ -15,9 +15,8 @@ exports.processLogin = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const sql = "SELECT * FROM accounts WHERE account_email = $1";
-        const result = await db.query(sql, [email]);
-        const account = result.rows[0];
+        // Use model instead of direct SQL
+        const account = await accountsModel.getAccountByEmail(email);
         console.log("Account fetched for login:", account);
 
         if (!account) {

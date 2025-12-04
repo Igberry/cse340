@@ -17,7 +17,6 @@ const { injectNavList } = require("./utilities/middleware");
 const baseRoute = require("./routes/baseRoute");
 const invRoutes = require('./routes/inventoryRoute');
 const accountRoutes = require('./routes/accounts');
-const reviewRoutes = require('./routes/reviewRoutes');
 
 // Set view engine
 app.set('view engine', 'ejs');
@@ -60,7 +59,6 @@ app.use((req, res, next) => {
 app.use("/", baseRoute);         // Home and general pages
 app.use("/inv", invRoutes);  
 app.use("/account", accountRoutes); // Account-related routes
-app.use("/reviews", reviewRoutes); // Review routes
 
 // 404 error handling
 app.use((req, res) => {

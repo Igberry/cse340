@@ -33,6 +33,52 @@
             </ul>
           </div>
         </section>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+          <div class="reviews-header">
+            <h2>Customer Reviews</h2>
+            <div class="rating-summary">
+              <% if (reviewCount > 0) { %>
+                <span class="avg-rating">⭐ <%= avgRating %></span>
+                <span class="review-count">(<%= reviewCount %> <%= reviewCount === 1 ? 'review' : 'reviews' %>)</span>
+              <% } else { %>
+                <span class="no-reviews">No reviews yet</span>
+              <% } %>
+            </div>
+          </div>
+
+          <% if (locals.loggedin) { %>
+            <a href="/reviews/add/<%= vehicle.inv_id %>" class="btn-add-review">Write a Review</a>
+          <% } else { %>
+            <p><a href="/account/login">Login</a> to write a review</p>
+          <% } %>
+
+          <div class="reviews-list">
+            <% if (reviews && reviews.length > 0) { %>
+              <% reviews.forEach(review => { %>
+                <div class="review-card">
+                  <div class="review-header">
+                    <span class="review-author"><%= review.account_firstname %> <%= review.account_lastname %></span>
+                    <span class="review-rating">
+                      <% for(let i = 0; i < review.review_rating; i++) { %>⭐<% } %>
+                    </span>
+                  </div>
+                  <p class="review-text"><%= review.review_text %></p>
+                  <p class="review-date"><%= new Date(review.review_date).toLocaleDateString() %></p>
+                  
+                  <% if (locals.loggedin && locals.account && review.account_id === locals.account.account_id) { %>
+                    <div class="review-actions">
+                      <a href="/reviews/edit/<%= review.review_id %>" class="btn-edit">Edit</a>
+                    </div>
+                  <% } %>
+                </div>
+              <% }); %>
+            <% } else { %>
+              <p class="no-reviews-msg">Be the first to review this vehicle!</p>
+            <% } %>
+          </div>
+        </section>
       </main>
 
 
