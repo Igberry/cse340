@@ -3,7 +3,6 @@
 DROP TABLE IF EXISTS inventory CASCADE;
 DROP TABLE IF EXISTS classification CASCADE;
 DROP TABLE IF EXISTS accounts CASCADE;
-
 -- 1. Create Tables
 -- Accounts Table (plural - matches application)
 CREATE TABLE accounts (
